@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cover Layout Options</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #2a2010; font-family: sans-serif; padding: 30px 20px; }
+    h1 { color: #f0e6c8; font-family: 'EB Garamond', serif; text-align: center; margin-bottom: 8px; font-size: 1.4rem; letter-spacing: 0.1em; }
+    .subtitle { color: #c8b890; font-family: 'EB Garamond', serif; text-align: center; font-style: italic; margin-bottom: 30px; font-size: 0.95rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1400px; margin: 0 auto; }
+    .option { display: flex; flex-direction: column; }
+    .option-label { color: #f0e6c8; font-family: 'Playfair Display SC', serif; font-size: 0.85rem; letter-spacing: 0.15em; margin-bottom: 8px; text-align: center; }
+    .option-desc { color: #c8b890; font-family: 'EB Garamond', serif; font-size: 0.82rem; font-style: italic; margin-bottom: 12px; text-align: center; line-height: 1.4; }
+
+    /* ── SHARED PAPER TEXTURE ── */
+    .paper {
+      background-color: #f0e6c8;
+      background-image:
+        radial-gradient(ellipse at 15% 15%, rgba(160,120,60,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 85%, rgba(120,80,30,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(240,220,170,1) 0%, rgba(215,190,135,1) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .paper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 35%, rgba(50,35,10,0.4) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .bw { filter: grayscale(100%) sepia(15%) contrast(1.1) brightness(0.9); }
+
+    /* ══════════════════════════════════════════
+       OPTION A — THE BROADSHEET FRONT PAGE
+       Full-bleed hero portrait, masthead over image
+    ══════════════════════════════════════════ */
+    .option-a {
+      width: 100%;
+      aspect-ratio: 297 / 420;
+      position: relative;
+    }
+    .option-a .hero-full {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .option-a .hero-full img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(100%) sepia(20%) contrast(1.05) brightness(0.65);
+    }
+    .option-a .overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(15,10,3,0.75) 0%,
+        rgba(15,10,3,0.2) 35%,
+        rgba(15,10,3,0.1) 55%,
+        rgba(15,10,3,0.85) 100%
+      );
+      z-index: 1;
+    }
+    .option-a .content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      padding: 3% 5%;
+    }
+    .option-a .top-section {
+      display: flex;
+      align-items: center;
+      gap: 3%;
+      margin-bottom: 1.5%;
+    }
+    .option-a .crest-a {
+      width: 10%;
+      filter: grayscale(100%) sepia(30%) brightness(1.8) contrast(0.8);
+      opacity: 0.9;
+    }
+    .option-a .masthead-a {
+      flex: 1;
+      text-align: center;
+    }
+    .option-a .kicker-a {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: #d4c090;
+      display: block;
+      margin-bottom: 1%;
+    }
+    .option-a .title-a {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-weight: 900;
+      color: #f5ead0;
+      line-height: 0.9;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    }
+    .option-a .rule-a {
+      width: 100%;
+      height: 1px;
+      background: rgba(212,192,144,0.6);
+      margin: 1.5% 0;
+    }
+    .option-a .rule-a-thick {
+      width: 100%;
+      height: 2px;
+      background: rgba(212,192,144,0.7);
+      margin: 0.5% 0;
+    }
+    .option-a .bottom-section {
+      margin-top: auto;
+      border-top: 1px solid rgba(212,192,144,0.5);
+      padding-top: 2%;
+    }
+    .option-a .headline-a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #f5ead0;
+      line-height: 1.1;
+      text-align: center;
+      margin-bottom: 1.5%;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.9);
+    }
+    .option-a .deck-a {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.72rem;
+      font-style: italic;
+      color: #d4c090;
+      text-align: center;
+      line-height: 1.4;
+      margin-bottom: 2%;
+    }
+    .option-a .subtitle-band-a {
+      background: rgba(212,192,144,0.15);
+      border: 1px solid rgba(212,192,144,0.4);
+      padding: 1.5% 3%;
+      text-align: center;
+    }
+    .option-a .subtitle-band-a p {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      color: #d4c090;
+    }
+
+    /* ══════════════════════════════════════════
+       OPTION B — THE ILLUSTRATED MAGAZINE
+       Large portrait left, masthead + text right
+    ══════════════════════════════════════════ */
+    .option-b {
+      width: 100%;
+      aspect-ratio: 297 / 420;
+      display: flex;
+      flex-direction: column;
+    }
+    .option-b .masthead-b {
+      padding: 2.5% 4% 2%;
+      border-bottom: 3px solid #2A1E08;
+      display: flex;
+      align-items: center;
+      gap: 3%;
+    }
+    .option-b .crest-b {
+      width: 9%;
+      filter: grayscale(100%) sepia(30%) contrast(1.1) brightness(0.85);
+      opacity: 0.88;
+    }
+    .option-b .title-b-wrap {
+      flex: 1;
+      text-align: center;
+    }
+    .option-b .kicker-b {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      color: #3A2A10;
+      display: block;
+      margin-bottom: 1%;
+    }
+    .option-b .title-b {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #1E1408;
+      line-height: 0.9;
+    }
+    .option-b .body-b {
+      flex: 1;
+      display: flex;
+      gap: 0;
+    }
+    .option-b .portrait-col-b {
+      width: 52%;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .option-b .portrait-col-b img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(100%) sepia(18%) contrast(1.12) brightness(0.88);
+      display: block;
+    }
+    .option-b .portrait-col-b .fig-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15,10,3,0.65);
+      padding: 2% 3%;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.55rem;
+      font-style: italic;
+      color: #d4c090;
+      text-align: center;
+    }
+    .option-b .text-col-b {
+      flex: 1;
+      padding: 4% 4% 3%;
+      display: flex;
+      flex-direction: column;
+      border-left: 2px solid #2A1E08;
+    }
+    .option-b .headline-b {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #1E1408;
+      line-height: 1.15;
+      margin-bottom: 3%;
+      padding-bottom: 3%;
+      border-bottom: 1px solid rgba(58,42,16,0.4);
+    }
+    .option-b .body-text-b {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.6rem;
+      color: #2A1E08;
+      line-height: 1.6;
+      text-align: justify;
+      flex: 1;
+    }
+    .option-b .contents-b {
+      margin-top: 4%;
+      border-top: 1px solid rgba(58,42,16,0.35);
+      padding-top: 3%;
+    }
+    .option-b .contents-head-b {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      color: #3A2A10;
+      margin-bottom: 2%;
+    }
+    .option-b .contents-item-b {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.52rem;
+      color: #2A1E08;
+      line-height: 1.5;
+      border-bottom: 1px dotted rgba(58,42,16,0.25);
+      padding-bottom: 1.5%;
+      margin-bottom: 1.5%;
+    }
+    .option-b .footer-b {
+      padding: 2% 4%;
+      border-top: 3px solid #2A1E08;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .option-b .footer-text-b {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.42rem;
+      letter-spacing: 0.12em;
+      color: #3A2A10;
+    }
+
+    /* ══════════════════════════════════════════
+       OPTION C — THE PROCLAMATION
+       Centred, symmetrical, formal, no hero image
+       — pure typography and ornament
+    ══════════════════════════════════════════ */
+    .option-c {
+      width: 100%;
+      aspect-ratio: 297 / 420;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4% 7%;
+    }
+    .option-c .border-c {
+      position: absolute;
+      inset: 12px;
+      border: 1.5px solid rgba(58,42,16,0.5);
+      pointer-events: none;
+    }
+    .option-c .border-c-inner {
+      position: absolute;
+      inset: 17px;
+      border: 0.5px solid rgba(58,42,16,0.3);
+      pointer-events: none;
+    }
+    .option-c .rule-thick-c { width: 100%; height: 3px; background: #2A1E08; margin: 1% 0 0.5%; }
+    .option-c .rule-thin-c { width: 100%; height: 1px; background: rgba(58,42,16,0.5); margin: 0.5% 0; }
+    .option-c .kicker-c {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.22em;
+      color: #3A2A10;
+      text-align: center;
+      margin: 1.5% 0;
+    }
+    .option-c .crests-c {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5%;
+      width: 100%;
+      margin: 2% 0;
+    }
+    .option-c .crest-c {
+      width: 16%;
+      filter: grayscale(100%) sepia(30%) contrast(1.1) brightness(0.85);
+      opacity: 0.88;
+    }
+    .option-c .crest-rule-c {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(58,42,16,0.5), transparent);
+    }
+    .option-c .the-c {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.35em;
+      color: #3A2A10;
+      text-align: center;
+      margin-bottom: 0.5%;
+    }
+    .option-c .title-c {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem;
+      font-weight: 900;
+      color: #1E1408;
+      line-height: 0.88;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+    .option-c .dark-band-c {
+      width: 100%;
+      background: #2A1E08;
+      padding: 2% 0;
+      text-align: center;
+      margin: 2% 0;
+    }
+    .option-c .dark-band-c p {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      color: #f0e6c8;
+    }
+    .option-c .ornament-c {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.2rem;
+      color: rgba(58,42,16,0.5);
+      letter-spacing: 0.3em;
+      margin: 1% 0;
+    }
+    .option-c .proclamation-c {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #1E1408;
+      text-align: center;
+      line-height: 1.2;
+      margin: 2% 0 1%;
+    }
+    .option-c .deck-c {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.7rem;
+      font-style: italic;
+      color: #3A2A10;
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 2%;
+    }
+    .option-c .portraits-row-c {
+      display: flex;
+      gap: 3%;
+      width: 100%;
+      margin: 2% 0;
+    }
+    .option-c .portrait-c {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .option-c .portrait-c img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(100%) sepia(18%) contrast(1.12) brightness(0.88);
+      border: 1px solid rgba(58,42,16,0.3);
+    }
+    .option-c .portrait-c-cap {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.48rem;
+      font-style: italic;
+      color: #3A2A10;
+      text-align: center;
+      margin-top: 1%;
+      opacity: 0.75;
+    }
+    .option-c .body-c {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.6rem;
+      color: #2A1E08;
+      line-height: 1.6;
+      text-align: center;
+      margin: 1.5% 0;
+    }
+    .option-c .seal-row-c {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: auto;
+      padding-top: 2%;
+      border-top: 1px solid rgba(58,42,16,0.35);
+    }
+    .option-c .sig-c {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      font-style: italic;
+      color: #2A1E08;
+    }
+    .option-c .motto-c {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      color: #3A2A10;
+      text-align: center;
+    }
+    .option-c .seal-c svg { width: 60px; height: 60px; }
+
+    /* ══════════════════════════════════════════
+       OPTION D — THE EXPEDITION DOSSIER
+       Dark background, full-bleed panoramic image
+       at top, cream panel below with all text
+    ══════════════════════════════════════════ */
+    .option-d {
+      width: 100%;
+      aspect-ratio: 297 / 420;
+      display: flex;
+      flex-direction: column;
+    }
+    .option-d .top-dark {
+      background: #1a1208;
+      padding: 2.5% 5% 2%;
+      display: flex;
+      align-items: center;
+      gap: 3%;
+      border-bottom: 2px solid #8B6914;
+    }
+    .option-d .crest-d {
+      width: 9%;
+      filter: grayscale(100%) sepia(30%) brightness(1.6) contrast(0.9);
+      opacity: 0.85;
+    }
+    .option-d .masthead-d {
+      flex: 1;
+      text-align: center;
+    }
+    .option-d .kicker-d {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      color: #8B6914;
+      display: block;
+      margin-bottom: 0.5%;
+    }
+    .option-d .title-d {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #f0e6c8;
+      line-height: 0.9;
+    }
+    .option-d .hero-panorama {
+      height: 32%;
+      overflow: hidden;
+      position: relative;
+    }
+    .option-d .hero-panorama img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: grayscale(100%) sepia(25%) contrast(1.1) brightness(0.75);
+    }
+    .option-d .panorama-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(26,18,8,0.3) 0%, rgba(26,18,8,0.0) 40%, rgba(26,18,8,0.5) 100%);
+    }
+    .option-d .stamp-d {
+      position: absolute;
+      top: 5%;
+      right: 3%;
+      width: 14%;
+    }
+    .option-d .stamp-d img {
+      width: 100%;
+      filter: grayscale(100%) sepia(18%) contrast(1.12) brightness(0.88);
+      border: 2px solid rgba(212,192,144,0.5);
+    }
+    .option-d .cream-panel {
+      flex: 1;
+      background: #f0e6c8;
+      padding: 3% 5%;
+      display: flex;
+      flex-direction: column;
+    }
+    .option-d .headline-d {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #1E1408;
+      line-height: 1.1;
+      text-align: center;
+      padding-bottom: 2%;
+      border-bottom: 2px solid #2A1E08;
+      margin-bottom: 2%;
+    }
+    .option-d .two-col-d {
+      display: flex;
+      gap: 4%;
+      flex: 1;
+    }
+    .option-d .col-d {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .option-d .col-d-img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      filter: grayscale(100%) sepia(18%) contrast(1.12) brightness(0.88);
+      margin-bottom: 2%;
+    }
+    .option-d .col-d-head {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      color: #3A2A10;
+      margin-bottom: 1.5%;
+      border-bottom: 1px solid rgba(58,42,16,0.3);
+      padding-bottom: 1%;
+    }
+    .option-d .col-d-body {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.58rem;
+      color: #2A1E08;
+      line-height: 1.55;
+      text-align: justify;
+    }
+    .option-d .contents-d {
+      margin-top: 2%;
+      border-top: 1px solid rgba(58,42,16,0.3);
+      padding-top: 2%;
+    }
+    .option-d .contents-head-d {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      color: #3A2A10;
+      margin-bottom: 1.5%;
+    }
+    .option-d .contents-row-d {
+      display: flex;
+      gap: 3%;
+    }
+    .option-d .contents-item-d {
+      flex: 1;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.5rem;
+      color: #2A1E08;
+      line-height: 1.4;
+      border-left: 1px solid rgba(58,42,16,0.3);
+      padding-left: 2%;
+    }
+    .option-d .contents-item-d strong {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.42rem;
+      display: block;
+      margin-bottom: 0.5%;
+    }
+    .option-d .footer-d {
+      background: #1a1208;
+      padding: 2% 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid #8B6914;
+    }
+    .option-d .footer-text-d {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.4rem;
+      letter-spacing: 0.12em;
+      color: #8B6914;
+    }
+  </style>
+</head>
+<body>
+
+<h1>The Dulwich Gazette — Cover Page Options</h1>
+<p class="subtitle">Four distinct layouts — pick one (or mix elements) and I'll build it at full resolution.</p>
+
+<div class="grid">
+
+  <!-- ══ OPTION A ══ -->
+  <div class="option">
+    <p class="option-label">Option A — "The Cinematic Front Page"</p>
+    <p class="option-desc">Full-bleed hero portrait as background. Masthead and headline reversed out in cream over the dark image. Maximum drama. The portrait IS the cover.</p>
+    <div class="paper option-a">
+      <div class="hero-full">
+        <img src="images/shackleton_portrait.jpg" alt="" />
+      </div>
+      <div class="overlay-gradient"></div>
+      <div class="content">
+        <!-- Top masthead -->
+        <div class="top-section">
+          <img src="images/dulwich_crest.jpg" class="crest-a" alt="" />
+          <div class="masthead-a">
+            <span class="kicker-a">IMPERIAL SOCIETY FOR NORTHERN RESOLVE · DULWICH DIVISION · EST. 1966</span>
+            <div class="title-a">The Dulwich Gazette</div>
+          </div>
+          <img src="images/dulwich_crest.jpg" class="crest-a" alt="" />
+        </div>
+        <div class="rule-a-thick"></div>
+        <div class="rule-a"></div>
+        <!-- Bottom headline -->
+        <div class="bottom-section">
+          <div class="headline-a">PROFESSOR ANTONY LONG<br/>EMBARKS UPON HIS SIXTIETH YEAR</div>
+          <div class="deck-a">Arctic Traveller, University Leader &amp; Gentleman of Singular Endurance</div>
+          <div class="subtitle-band-a">
+            <p>SPECIAL POLAR &amp; DOMESTIC ENTERPRISE EDITION &nbsp;·&nbsp; MARCH 3RD, 1914 (QUITE REMARKABLY ALSO 2026) &nbsp;·&nbsp; PRICE: ONE PENNY</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ OPTION B ══ -->
+  <div class="option">
+    <p class="option-label">Option B — "The Illustrated Magazine"</p>
+    <p class="option-desc">Large portrait fills the left half. Masthead across the top. Headline, intro text, and contents list in the right column. Structured and editorial.</p>
+    <div class="paper option-b">
+      <!-- Masthead across full width -->
+      <div class="masthead-b">
+        <img src="images/dulwich_crest.jpg" class="crest-b" alt="" />
+        <div class="title-b-wrap">
+          <span class="kicker-b">IMPERIAL SOCIETY FOR NORTHERN RESOLVE · DULWICH DIVISION · EST. 1966</span>
+          <div class="title-b">The Dulwich Gazette</div>
+        </div>
+        <img src="images/dulwich_crest.jpg" class="crest-b" alt="" />
+      </div>
+      <!-- Body: portrait left, text right -->
+      <div class="body-b">
+        <div class="portrait-col-b">
+          <img src="images/shackleton_portrait.jpg" alt="" />
+          <div class="fig-label">FIG. I — Professor A. Long · Expeditioner &amp; Vice Chancellor</div>
+        </div>
+        <div class="text-col-b">
+          <div class="headline-b">PROFESSOR ANTONY LONG EMBARKS UPON HIS SIXTIETH YEAR</div>
+          <div class="body-text-b">
+            <p>It has come to the attention of this publication that Professor Antony Long — esteemed son of Dulwich College, veteran of the Greenland ice sheet, rescuer of stricken colleagues in Spitsbergen, and Vice Chancellor of Durham University — has this day commenced his sixtieth year upon the globe.</p>
+            <p style="text-indent:1em; margin-top:4px;">Born but twenty minutes after his elder twin, Professor Long displayed ambition from the earliest age. Like the illustrious Ernest Shackleton, likewise of Dulwich College, he has long favoured the Polar regions over more temperate climates.</p>
+            <p style="text-indent:1em; margin-top:4px;">This special edition records, for posterity, the life and achievements of a man of uncommon fortitude — a Dulwich man, in the finest tradition of the College.</p>
+          </div>
+          <div class="contents-b">
+            <div class="contents-head-b">CONTENTS OF THIS EDITION</div>
+            <div class="contents-item-b"><strong style="font-family:'Playfair Display SC',serif; font-size:0.45rem; letter-spacing:0.08em;">Page The First</strong> On Leadership &amp; Moral Fortitude · The Spitsbergen Rescue · Meteorological Forecast</div>
+            <div class="contents-item-b"><strong style="font-family:'Playfair Display SC',serif; font-size:0.45rem; letter-spacing:0.08em;">Page The Second</strong> Letters to the Editor · Phrenological Analysis · Interview at Sixty · Expeditionary Record</div>
+            <div class="contents-item-b"><strong style="font-family:'Playfair Display SC',serif; font-size:0.45rem; letter-spacing:0.08em;">Page The Third</strong> The Gentleman's Wardrobe · Polar Society · Shackleton &amp; Long Comparative Study</div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div class="footer-b">
+        <span class="footer-text-b">MARCH 3RD, 1914 (QUITE REMARKABLY ALSO 2026)</span>
+        <span class="footer-text-b">PRICE: ONE PENNY</span>
+        <span class="footer-text-b">PRINTED BY THE DULWICH PRESS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ OPTION C ══ -->
+  <div class="option">
+    <p class="option-label">Option C — "The Royal Proclamation"</p>
+    <p class="option-desc">Centred, symmetrical, pure typography. Two large crests flanking the title. Three small portraits in a row. No competing images — the words are the design.</p>
+    <div class="paper option-c" style="position:relative;">
+      <div class="border-c"></div>
+      <div class="border-c-inner"></div>
+      <div class="rule-thick-c"></div>
+      <div class="rule-thin-c"></div>
+      <p class="kicker-c">IMPERIAL SOCIETY FOR NORTHERN RESOLVE &nbsp;·&nbsp; DULWICH DIVISION &nbsp;·&nbsp; EST. 1966</p>
+      <div class="crests-c">
+        <div class="crest-rule-c"></div>
+        <img src="images/dulwich_crest.jpg" class="crest-c" alt="" />
+        <img src="images/dulwich_crest.jpg" class="crest-c" alt="" />
+        <div class="crest-rule-c"></div>
+      </div>
+      <p class="the-c">The</p>
+      <h1 class="title-c">Dulwich<br/>Gazette</h1>
+      <div class="dark-band-c">
+        <p>SPECIAL POLAR &amp; DOMESTIC ENTERPRISE EDITION &nbsp;·&nbsp; MARCH 3RD, 1914 (QUITE REMARKABLY ALSO 2026)</p>
+      </div>
+      <p class="ornament-c">✦ &nbsp; ✦ &nbsp; ✦</p>
+      <p class="proclamation-c">PROFESSOR ANTONY LONG<br/>EMBARKS UPON HIS SIXTIETH YEAR</p>
+      <p class="deck-c">Arctic Traveller, University Leader &amp; Gentleman of Singular Endurance<br/>A Dulwich Man, in the Finest Tradition of the College</p>
+      <div class="portraits-row-c">
+        <div class="portrait-c">
+          <img src="images/shackleton_portrait.jpg" alt="" />
+          <p class="portrait-c-cap">FIG. I — Leader, A. Long<br/>Turtleneck &amp; Resolve</p>
+        </div>
+        <div class="portrait-c">
+          <img src="images/hurley_crushed.jpg" alt="" />
+          <p class="portrait-c-cap">The Endurance, crushed by ice.<br/>A lesson in endurance.</p>
+        </div>
+        <div class="portrait-c">
+          <img src="images/shackleton_standing_new.jpg" alt="" />
+          <p class="portrait-c-cap">FIG. II — Leader, A. Long<br/>In Polar Attire</p>
+        </div>
+      </div>
+      <p class="body-c">This special edition of the Gazette records, for posterity, the life and achievements of a man of uncommon fortitude — a Dulwich man, in the finest tradition of the College. Born but twenty minutes after his elder twin, the Professor has never once acknowledged this as a disadvantage.</p>
+      <div class="seal-row-c">
+        <div>
+          <p class="sig-c">Simon Long</p>
+          <p style="font-family:'EB Garamond',serif; font-size:0.48rem; color:#3A2A10; opacity:0.75;">(Elder. By Twenty Minutes.) · Editor &amp; Proprietor</p>
+        </div>
+        <div class="motto-c">
+          <p>FORTITUDINE ET PROPOSITO</p>
+          <p style="font-family:'EB Garamond',serif; font-style:italic; font-size:0.48rem; margin-top:2px;">By Fortitude and Purpose</p>
+        </div>
+        <div class="seal-c">
+          <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="cArc" d="M 18,110 A 92,92 0 0,1 202,110" />
+              <path id="cArcB" d="M 202,110 A 92,92 0 0,1 18,110" />
+            </defs>
+            <circle cx="110" cy="110" r="100" fill="none" stroke="#7A1E1E" stroke-width="1.5"/>
+            <circle cx="110" cy="110" r="86" fill="none" stroke="#7A1E1E" stroke-width="0.8"/>
+            <text font-family="Playfair Display SC, serif" font-size="9" fill="#7A1E1E" letter-spacing="2"><textPath href="#cArc" startOffset="5%">IMPERIAL SOCIETY FOR NORTHERN RESOLVE · DULWICH DIVISION</textPath></text>
+            <text font-family="Playfair Display SC, serif" font-size="8" fill="#7A1E1E" letter-spacing="1.5"><textPath href="#cArcB" startOffset="8%">EST. 1966 · OFFICIAL EXPEDITIONARY SANCTION · Fortitudine et Proposito</textPath></text>
+            <text x="110" y="100" text-anchor="middle" font-family="Playfair Display SC, serif" font-size="12" fill="#7A1E1E" font-weight="bold">A. LONG</text>
+            <text x="110" y="116" text-anchor="middle" font-family="EB Garamond, serif" font-size="9" fill="#7A1E1E" font-style="italic">Expeditioner</text>
+            <text x="110" y="130" text-anchor="middle" font-family="Playfair Display SC, serif" font-size="8" fill="#7A1E1E">DULWICH · 1966</text>
+          </svg>
+        </div>
+      </div>
+      <div class="rule-thin-c"></div>
+      <div class="rule-thick-c"></div>
+    </div>
+  </div>
+
+  <!-- ══ OPTION D ══ -->
+  <div class="option">
+    <p class="option-label">Option D — "The Expedition Dossier"</p>
+    <p class="option-desc">Dark header and footer (like a classified file cover). Panoramic Hurley image as a full-width band. Cream panel below with two-column text and contents. Dramatic contrast.</p>
+    <div class="option-d">
+      <!-- Dark top bar -->
+      <div class="top-dark">
+        <img src="images/dulwich_crest.jpg" class="crest-d" alt="" />
+        <div class="masthead-d">
+          <span class="kicker-d">IMPERIAL SOCIETY FOR NORTHERN RESOLVE · DULWICH DIVISION · EST. 1966</span>
+          <div class="title-d">The Dulwich Gazette</div>
+        </div>
+        <img src="images/dulwich_crest.jpg" class="crest-d" alt="" />
+      </div>
+      <!-- Panoramic image band -->
+      <div class="hero-panorama">
+        <img src="images/hurley_team.jpg" alt="" />
+        <div class="panorama-overlay"></div>
+        <!-- Small portrait stamp top-right -->
+        <div class="stamp-d">
+          <img src="images/shackleton_portrait.jpg" alt="" />
+        </div>
+      </div>
+      <!-- Cream content panel -->
+      <div class="cream-panel">
+        <div class="headline-d">PROFESSOR ANTONY LONG<br/>EMBARKS UPON HIS SIXTIETH YEAR</div>
+        <div class="two-col-d">
+          <div class="col-d">
+            <img src="images/shackleton_standing_new.jpg" class="col-d-img" alt="" />
+            <p class="col-d-head">ARCTIC TRAVELLER &amp; UNIVERSITY LEADER</p>
+            <p class="col-d-body">It has come to the attention of this publication that Professor Antony Long — esteemed son of Dulwich College, veteran of the Greenland ice sheet, rescuer of stricken colleagues in Spitsbergen, and Vice Chancellor of Durham University — has this day commenced his sixtieth year upon the globe. Born but twenty minutes after his elder twin, Professor Long displayed ambition from the earliest age.</p>
+          </div>
+          <div class="col-d">
+            <img src="images/hurley_elephant_island.jpg" class="col-d-img" alt="" />
+            <p class="col-d-head">GENTLEMAN OF SINGULAR ENDURANCE</p>
+            <p class="col-d-body">Like the illustrious Ernest Shackleton, likewise of Dulwich College, he has long favoured the Polar regions over more temperate climates. His expeditions have rendered him intimately acquainted with ice, wind, and adversity. Where others perceive desolation, he discerns opportunity. This special edition records, for posterity, the life and achievements of a man of uncommon fortitude.</p>
+          </div>
+        </div>
+        <div class="contents-d">
+          <p class="contents-head-d">CONTENTS OF THIS EDITION</p>
+          <div class="contents-row-d">
+            <div class="contents-item-d"><strong>Page The First</strong> On Leadership &amp; Moral Fortitude · The Spitsbergen Rescue · Meteorological Forecast</div>
+            <div class="contents-item-d"><strong>Page The Second</strong> Letters to the Editor · Phrenological Analysis · Interview at Sixty · Expeditionary Record</div>
+            <div class="contents-item-d"><strong>Page The Third</strong> The Gentleman's Wardrobe · Polar Society · Shackleton &amp; Long: A Comparative Study</div>
+          </div>
+        </div>
+      </div>
+      <!-- Dark footer -->
+      <div class="footer-d">
+        <span class="footer-text-d">MARCH 3RD, 1914 (QUITE REMARKABLY ALSO 2026)</span>
+        <span class="footer-text-d">PRICE: ONE PENNY · PRINTED BY THE DULWICH PRESS</span>
+        <span class="footer-text-d">FORTITUDINE ET PROPOSITO</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+</body>
+</html>

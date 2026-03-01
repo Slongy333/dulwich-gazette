@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Dulwich Gazette — Cover</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 860px;
+      background: #1a1208;
+    }
+
+    /* ── PAPER BASE ── */
+    .page {
+      width: 860px;
+      display: flex;
+      flex-direction: column;
+      background-color: #ede0c0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 20% 20%, rgba(180,140,60,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(140,100,30,0.10) 0%, transparent 55%),
+        linear-gradient(160deg, #f2e5c0 0%, #e8d5a8 40%, #dfc99a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* foxing spots */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 18px 12px at 7% 12%, rgba(120,80,20,0.12) 0%, transparent 100%),
+        radial-gradient(ellipse 8px 14px at 93% 8%, rgba(100,60,15,0.10) 0%, transparent 100%),
+        radial-gradient(ellipse 22px 10px at 15% 88%, rgba(110,70,20,0.09) 0%, transparent 100%),
+        radial-gradient(ellipse 12px 18px at 88% 92%, rgba(90,55,12,0.11) 0%, transparent 100%),
+        radial-gradient(ellipse 6px 6px at 50% 5%, rgba(100,65,15,0.08) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* vignette */
+    .page::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(30,20,5,0.35) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── DARK TOP BAR ── */
+    .top-bar {
+      background: #130e04;
+      border-bottom: 3px solid #8B6914;
+      padding: 18px 40px 14px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .top-bar::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0; right: 0;
+      height: 1px;
+      background: rgba(139,105,20,0.4);
+    }
+
+    .crest-top {
+      width: 64px;
+      flex-shrink: 0;
+      filter: grayscale(100%) sepia(40%) brightness(1.5) contrast(0.85);
+      opacity: 0.85;
+    }
+
+    .masthead-centre {
+      flex: 1;
+      text-align: center;
+    }
+
+    .kicker-top {
+      display: block;
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: #8B6914;
+      margin-bottom: 4px;
+    }
+
+    .title-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.8rem;
+      font-weight: 900;
+      color: #f0e6c8;
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-shadow: 2px 3px 12px rgba(0,0,0,0.7);
+    }
+
+    .edition-line {
+      display: block;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.65rem;
+      font-style: italic;
+      color: rgba(212,192,144,0.7);
+      margin-top: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── PANORAMIC IMAGE BAND ── */
+    .panorama-band {
+      height: 320px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .panorama-band img.panorama-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: grayscale(100%) sepia(22%) contrast(1.08) brightness(0.72);
+      display: block;
+    }
+
+    /* gradient overlays on panorama */
+    .panorama-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(19,14,4,0.55) 0%,
+        rgba(19,14,4,0.05) 30%,
+        rgba(19,14,4,0.05) 65%,
+        rgba(19,14,4,0.70) 100%
+      );
+      z-index: 1;
+    }
+
+    /* side vignettes on panorama */
+    .panorama-band::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(19,14,4,0.45) 0%,
+        transparent 15%,
+        transparent 85%,
+        rgba(19,14,4,0.45) 100%
+      );
+      z-index: 1;
+    }
+
+    /* text overlaid on panorama */
+    .panorama-overlay-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      padding: 0 40px 22px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .panorama-caption {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.68rem;
+      font-style: italic;
+      color: rgba(212,192,144,0.75);
+      letter-spacing: 0.04em;
+    }
+
+    /* Portrait stamp — top right of panorama */
+    .portrait-stamp {
+      position: absolute;
+      top: 18px;
+      right: 40px;
+      z-index: 3;
+      width: 130px;
+    }
+
+    .portrait-stamp img {
+      width: 100%;
+      display: block;
+      filter: grayscale(100%) sepia(18%) contrast(1.12) brightness(0.88);
+      border: 2px solid rgba(212,192,144,0.55);
+      box-shadow: 3px 4px 16px rgba(0,0,0,0.6);
+    }
+
+    .portrait-stamp .stamp-cap {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.55rem;
+      font-style: italic;
+      color: rgba(212,192,144,0.75);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* Second portrait stamp — top left of panorama */
+    .portrait-stamp-left {
+      position: absolute;
+      top: 18px;
+      left: 40px;
+      z-index: 3;
+      width: 130px;
+    }
+
+    .portrait-stamp-left img {
+      width: 100%;
+      display: block;
+      filter: grayscale(100%) sepia(18%) contrast(1.12) brightness(0.88);
+      border: 2px solid rgba(212,192,144,0.55);
+      box-shadow: 3px 4px 16px rgba(0,0,0,0.6);
+    }
+
+    .portrait-stamp-left .stamp-cap {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.55rem;
+      font-style: italic;
+      color: rgba(212,192,144,0.75);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ── DARK HEADLINE BAND ── */
+    .headline-band {
+      background: #1a1208;
+      border-top: 2px solid #8B6914;
+      border-bottom: 2px solid #8B6914;
+      padding: 20px 40px 18px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .headline-kicker {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: #8B6914;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .headline-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #f0e6c8;
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      text-shadow: 1px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .headline-deck {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: rgba(212,192,144,0.85);
+      margin-top: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── CREAM CONTENT PANEL ── */
+    .cream-panel {
+      flex: 1;
+      padding: 28px 40px 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Three-column body */
+    .three-col {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 24px;
+    }
+
+    .col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      object-position: center center;
+      filter: grayscale(100%) sepia(18%) contrast(1.1) brightness(0.88);
+      border: 1px solid rgba(58,42,16,0.3);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .col-head {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      color: #2A1E08;
+      border-bottom: 1px solid rgba(58,42,16,0.35);
+      padding-bottom: 5px;
+      margin-bottom: 8px;
+    }
+
+    .col-body {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.78rem;
+      color: #1E1408;
+      line-height: 1.65;
+      text-align: justify;
+      flex: 1;
+    }
+
+    .col-body p + p {
+      text-indent: 1em;
+      margin-top: 0;
+    }
+
+    /* Divider rule between sections */
+    .rule-full {
+      width: 100%;
+      border: none;
+      border-top: 1px solid rgba(58,42,16,0.35);
+      margin: 0 0 20px;
+    }
+
+    .rule-thick {
+      width: 100%;
+      border: none;
+      border-top: 2px solid #2A1E08;
+      margin: 0 0 16px;
+    }
+
+    /* ── CONTENTS PANEL ── */
+    .contents-panel {
+      border: 1px solid rgba(58,42,16,0.35);
+      padding: 16px 20px;
+      background: rgba(58,42,16,0.04);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .contents-panel::before {
+      content: '✦';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #e8d5a8;
+      padding: 0 8px;
+      font-size: 0.7rem;
+      color: rgba(58,42,16,0.4);
+    }
+
+    .contents-head {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: #2A1E08;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .contents-grid {
+      display: flex;
+      gap: 20px;
+    }
+
+    .contents-col {
+      flex: 1;
+      border-left: 1px solid rgba(58,42,16,0.25);
+      padding-left: 14px;
+    }
+
+    .contents-col:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .contents-page-head {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      color: #2A1E08;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .contents-items {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.68rem;
+      color: #3A2A10;
+      line-height: 1.5;
+    }
+
+    /* ── COLOPHON ROW ── */
+    .colophon-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(58,42,16,0.35);
+      padding-top: 14px;
+    }
+
+    .sig-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sig-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #1E1408;
+    }
+
+    .sig-sub {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.62rem;
+      color: rgba(58,42,16,0.7);
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .motto-block {
+      text-align: center;
+    }
+
+    .motto-latin {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: #2A1E08;
+      display: block;
+    }
+
+    .motto-english {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.65rem;
+      font-style: italic;
+      color: rgba(58,42,16,0.65);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .motto-college {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      color: rgba(58,42,16,0.5);
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* Seal SVG */
+    .seal-block svg {
+      width: 80px;
+      height: 80px;
+    }
+
+    /* ── DARK FOOTER BAR ── */
+    .footer-bar {
+      background: #130e04;
+      border-top: 3px solid #8B6914;
+      padding: 12px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .footer-bar::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 0; right: 0;
+      height: 1px;
+      background: rgba(139,105,20,0.35);
+    }
+
+    .footer-text {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.14em;
+      color: #8B6914;
+    }
+
+    .footer-centre {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.6rem;
+      font-style: italic;
+      color: rgba(139,105,20,0.7);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ DARK TOP BAR ══ -->
+  <div class="top-bar">
+    <img src="images/dulwich_crest.jpg" class="crest-top" alt="Dulwich College Crest" />
+    <div class="masthead-centre">
+      <span class="kicker-top">Imperial Society for Northern Resolve &nbsp;·&nbsp; Dulwich Division &nbsp;·&nbsp; Est. 1966</span>
+      <div class="title-main">The Dulwich Gazette</div>
+      <span class="edition-line">Special Polar &amp; Domestic Enterprise Edition &nbsp;·&nbsp; Printed by the Dulwich Press &nbsp;·&nbsp; Price: One Penny &nbsp;·&nbsp; <em>Detur Gloria Soli Deo</em></span>
+    </div>
+    <img src="images/dulwich_crest.jpg" class="crest-top" alt="Dulwich College Crest" />
+  </div>
+
+  <!-- ══ PANORAMIC IMAGE BAND ══ -->
+  <div class="panorama-band">
+    <img src="images/hurley_team.jpg" class="panorama-img" alt="The crew of the Endurance" />
+
+    <!-- Portrait stamps over panorama -->
+    <div class="portrait-stamp-left">
+      <img src="images/shackleton_portrait.jpg" alt="Professor A. Long" />
+      <p class="stamp-cap">FIG. I — Prof. A. Long<br/>Expeditioner &amp; Vice Chancellor</p>
+    </div>
+
+    <div class="portrait-stamp">
+      <img src="images/shackleton_standing_new.jpg" alt="Leader A. Long in polar attire" />
+      <p class="stamp-cap">FIG. II — Leader, A. Long<br/>In Polar Attire</p>
+    </div>
+
+    <!-- Caption at bottom of panorama -->
+    <div class="panorama-overlay-text">
+      <span class="panorama-caption">The crew of the Endurance, Weddell Sea, 1915. Photograph by Frank Hurley.</span>
+      <span class="panorama-caption">A study in resilience.</span>
+    </div>
+  </div>
+
+  <!-- ══ DARK HEADLINE BAND ══ -->
+  <div class="headline-band">
+    <span class="headline-kicker">Distinguished Old Alleyn's Scholar &nbsp;·&nbsp; Dulwich College, Est. 1619</span>
+    <div class="headline-main">Professor Antony Long Embarks Upon His Sixtieth Year</div>
+    <div class="headline-deck">Arctic Traveller &nbsp;·&nbsp; University Leader &nbsp;·&nbsp; Gentleman of Singular Endurance</div>
+  </div>
+
+  <!-- ══ CREAM CONTENT PANEL ══ -->
+  <div class="cream-panel">
+
+    <!-- Three-column body text with images -->
+    <div class="three-col">
+
+      <!-- Column 1: Endurance crushed + intro -->
+      <div class="col">
+        <img src="images/hurley_crushed.jpg" class="col-img" alt="The Endurance, crushed by ice" />
+        <p class="col-head">On Leadership &amp; Moral Fortitude</p>
+        <div class="col-body">
+          <p>It has come to the attention of this publication that Professor Antony Long — esteemed son of Dulwich College, veteran of the Greenland ice sheet, rescuer of stricken colleagues in Spitsbergen, and Vice Chancellor of Durham University — has this day commenced his sixtieth year upon the globe.</p>
+          <p>Born but twenty minutes after his elder twin, Professor Long displayed ambition from the earliest age. Like the illustrious Ernest Shackleton, likewise of Dulwich College, he has long favoured the Polar regions over more temperate climates. His expeditions have rendered him intimately acquainted with ice, wind, and adversity. Where others perceive desolation, he discerns opportunity.</p>
+        </div>
+      </div>
+
+      <!-- Column 2: Elephant Island + rescue -->
+      <div class="col">
+        <img src="images/hurley_elephant_island.jpg" class="col-img" alt="Camp on Elephant Island" />
+        <p class="col-head">A Rescue of Uncommon Fortitude</p>
+        <div class="col-body">
+          <p>In the winter of 1994, during an expedition to the Svalbard archipelago, a fellow team member suffered a severe sprain of the ankle whilst traversing a glacial field above Longyearbyen. Unable to walk, and with the temperature descending rapidly, the situation demanded immediate and decisive action.</p>
+          <p>Professor Long — then a man of eight-and-twenty years, but already possessed of the bearing of a seasoned expeditioner — hoisted his colleague upon his back and carried her, without complaint, across eight miles of hostile terrain to the safety of the base camp. A polar bear was observed at a distance of some two hundred yards. The Professor did not alter his pace.</p>
+        </div>
+      </div>
+
+      <!-- Column 3: James Caird + achievement -->
+      <div class="col">
+        <img src="images/hurley_james_caird.jpg" class="col-img" alt="The James Caird lifeboat" />
+        <p class="col-head">A Life of Uncommon Achievement</p>
+        <div class="col-body">
+          <p>This special edition of the Gazette records, for posterity, the life and achievements of a man of uncommon fortitude — a Dulwich man, in the finest tradition of the College. From the glaciers of Svalbard to the lecture halls of Durham, from the ice cores of Greenland to the corridors of academic power, Professor Long has conducted himself with the quiet certainty of one who has never once doubted that the correct path, however arduous, is the one worth taking.</p>
+          <p>Born but twenty minutes after his elder twin, the Professor has never once acknowledged this as a disadvantage. The Gazette considers it a formative lesson in patience.</p>
+        </div>
+      </div>
+
+    </div><!-- /three-col -->
+
+    <hr class="rule-thick" />
+
+    <!-- Contents panel -->
+    <div class="contents-panel">
+      <p class="contents-head">Contents of This Edition</p>
+      <div class="contents-grid">
+        <div class="contents-col">
+          <span class="contents-page-head">Page The First</span>
+          <p class="contents-items">On Leadership &amp; Moral Fortitude · A Rescue of Uncommon Fortitude · The Meteorological Forecast · Classified Notices</p>
+        </div>
+        <div class="contents-col">
+          <span class="contents-page-head">Page The Second</span>
+          <p class="contents-items">Correspondence &amp; Letters to the Editor · A Phrenological Analysis · An Interview at Sixty · The Expeditionary Record</p>
+        </div>
+        <div class="contents-col">
+          <span class="contents-page-head">Page The Third</span>
+          <p class="contents-items">The Gentleman's Wardrobe · A Brief History of the Dulwich College Polar Society · Shackleton &amp; Long: A Comparative Study · The Ode to the Expedition Leader</p>
+        </div>
+        <div class="contents-col">
+          <span class="contents-page-head">Photographic Record</span>
+          <p class="contents-items">Frank Hurley's photographs of the Endurance expedition, 1914–17, by kind permission of the Royal Geographical Society</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colophon row -->
+    <div class="colophon-row">
+      <div class="sig-block">
+        <span class="sig-name">Simon Long</span>
+        <span class="sig-sub">(Elder. By Twenty Minutes.) &nbsp;·&nbsp; Editor &amp; Proprietor</span>
+        <span class="sig-sub">Old Alleyn's &nbsp;·&nbsp; Dulwich College &nbsp;·&nbsp; Est. 1619</span>
+      </div>
+
+      <div class="motto-block">
+        <span class="motto-latin">Fortitudine et Proposito</span>
+        <span class="motto-english">By Fortitude and Purpose</span>
+        <span class="motto-college">Old Alleyn's &nbsp;·&nbsp; Dulwich College &nbsp;·&nbsp; Founded 1619</span>
+      </div>
+
+      <div class="seal-block">
+        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="arcTop" d="M 20,110 A 90,90 0 0,1 200,110" />
+            <path id="arcBot" d="M 200,110 A 90,90 0 0,1 20,110" />
+          </defs>
+          <circle cx="110" cy="110" r="102" fill="none" stroke="#7A1E1E" stroke-width="1.5"/>
+          <circle cx="110" cy="110" r="88" fill="none" stroke="#7A1E1E" stroke-width="0.8"/>
+          <circle cx="110" cy="110" r="84" fill="none" stroke="rgba(122,30,30,0.3)" stroke-width="0.5"/>
+          <text font-family="Playfair Display SC, serif" font-size="9.5" fill="#7A1E1E" letter-spacing="2.2">
+            <textPath href="#arcTop" startOffset="3%">IMPERIAL SOCIETY FOR NORTHERN RESOLVE · DULWICH DIVISION</textPath>
+          </text>
+          <text font-family="Playfair Display SC, serif" font-size="8.5" fill="#7A1E1E" letter-spacing="1.8">
+            <textPath href="#arcBot" startOffset="5%">EST. 1966 · OFFICIAL EXPEDITIONARY SANCTION · Fortitudine et Proposito</textPath>
+          </text>
+          <line x1="75" y1="110" x2="145" y2="110" stroke="#7A1E1E" stroke-width="0.6"/>
+          <text x="110" y="97" text-anchor="middle" font-family="Playfair Display SC, serif" font-size="13" fill="#7A1E1E" font-weight="bold">A. LONG</text>
+          <text x="110" y="113" text-anchor="middle" font-family="EB Garamond, serif" font-size="10" fill="#7A1E1E" font-style="italic">Expeditioner</text>
+          <text x="110" y="128" text-anchor="middle" font-family="Playfair Display SC, serif" font-size="9" fill="#7A1E1E">DULWICH · 1966</text>
+          <text x="110" y="143" text-anchor="middle" font-family="Playfair Display SC, serif" font-size="8" fill="#7A1E1E">Sixtieth Year</text>
+        </svg>
+      </div>
+    </div>
+
+  </div><!-- /cream-panel -->
+
+  <!-- ══ DARK FOOTER BAR ══ -->
+  <div class="footer-bar">
+    <span class="footer-text">The Dulwich Gazette &nbsp;·&nbsp; Established 1966</span>
+    <span class="footer-centre">March 3rd, 1914 &nbsp;·&nbsp; (Quite Remarkably Also 2026) &nbsp;·&nbsp; Price: One Penny</span>
+    <span class="footer-text">Old Alleyn's &nbsp;·&nbsp; Dulwich College &nbsp;·&nbsp; Founded 1619</span>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

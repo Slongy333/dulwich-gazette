@@ -1,0 +1,1508 @@
+/* ═══════════════════════════════════════════════════════════
+   THE DULWICH GAZETTE — EDWARDIAN EXPEDITION DOSSIER
+   Aged paper · Letterpress typography · Silver halide photography
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background-color: #1a1008;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Aged Paper Texture ── */
+.paper-texture {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.07'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  mix-blend-mode: multiply;
+}
+
+/* ── Vignette ── */
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(15, 8, 3, 0.65) 100%);
+}
+
+/* ── Watermark Background ── */
+.watermark-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.watermark-bg img {
+  width: 55%;
+  max-width: 650px;
+  opacity: 0.035;
+  filter: grayscale(100%) contrast(250%) blur(0.5px);
+  mix-blend-mode: multiply;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN GAZETTE WRAPPER — THE PAPER
+   ═══════════════════════════════════════════════════════════ */
+
+.gazette-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 24px 56px;
+  /* Soft cream base */
+  background-color: #F4EAD7;
+  /* Layered aging effects */
+  background-image:
+    /* Edge stains */
+    radial-gradient(ellipse 200px 300px at 0% 50%, rgba(139,100,55,0.09) 0%, transparent 100%),
+    radial-gradient(ellipse 200px 300px at 100% 50%, rgba(139,100,55,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 400px 100px at 50% 0%, rgba(139,100,55,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 400px 120px at 50% 100%, rgba(139,100,55,0.10) 0%, transparent 100%),
+    /* Foxing spots */
+    radial-gradient(ellipse 4px 3px at 8% 7%, rgba(139,100,60,0.22) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 4px at 91% 12%, rgba(120,85,45,0.18) 0%, transparent 100%),
+    radial-gradient(ellipse 5px 4px at 32% 78%, rgba(150,110,65,0.15) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 3px at 68% 91%, rgba(130,95,55,0.20) 0%, transparent 100%),
+    radial-gradient(ellipse 4px 3px at 76% 38%, rgba(140,100,60,0.14) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 4px at 18% 62%, rgba(125,90,50,0.17) 0%, transparent 100%),
+    radial-gradient(ellipse 6px 5px at 55% 25%, rgba(160,120,70,0.10) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 2px at 44% 85%, rgba(145,105,60,0.16) 0%, transparent 100%),
+    radial-gradient(ellipse 4px 3px at 85% 65%, rgba(135,98,55,0.13) 0%, transparent 100%),
+    /* Paper grain overlay */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.22 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23grain)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  box-shadow:
+    0 0 80px rgba(15,8,3,0.8),
+    inset 0 0 100px rgba(139,100,60,0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MASTHEAD
+   ═══════════════════════════════════════════════════════════ */
+
+.masthead {
+  text-align: center;
+  padding: 16px 30px 12px;
+  position: relative;
+}
+
+.masthead-rule {
+  border: none;
+  border-top: 1px solid #3A2F27;
+  margin: 5px 0;
+}
+
+.double-rule {
+  border-top: 3px double #3A2F27;
+  margin-top: 8px;
+}
+
+.masthead-ornament-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0 8px;
+}
+
+.corner-ornament {
+  font-size: 2.2rem;
+  color: #3A2F27;
+  opacity: 0.65;
+  line-height: 1;
+  flex-shrink: 0;
+  font-family: Georgia, serif;
+}
+
+.masthead-center {
+  flex: 1;
+  text-align: center;
+}
+
+.gazette-kicker {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  color: #3A2F27;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.8;
+}
+
+.gazette-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 6.5vw, 5.2rem);
+  font-weight: 900;
+  color: #28231E;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-shadow:
+    1px 1px 0 rgba(139,100,60,0.18),
+    0 0 30px rgba(244,234,215,0.3);
+  margin-bottom: 5px;
+}
+
+.gazette-subtitle {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  color: #3A2F27;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.masthead-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 0;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: #3A2F27;
+  text-transform: uppercase;
+}
+
+.meta-divider {
+  opacity: 0.45;
+  font-size: 0.6rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OUTER / INNER FRAMES
+   ═══════════════════════════════════════════════════════════ */
+
+.outer-frame {
+  border: 1px solid #3A2F27;
+  margin: 8px 12px;
+  padding: 7px;
+  position: relative;
+}
+
+.inner-frame {
+  border: 0.5px solid #3A2F27;
+  padding: 18px 22px 20px;
+  position: relative;
+}
+
+/* Corner ornaments — SVG line art */
+.frame-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  z-index: 3;
+}
+.fc-tl { top: -2px; left: -2px; }
+.fc-tr { top: -2px; right: -2px; }
+.fc-bl { bottom: -2px; left: -2px; }
+.fc-br { bottom: -2px; right: -2px; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADLINE BAND
+   ═══════════════════════════════════════════════════════════ */
+
+.headline-band {
+  text-align: center;
+  padding: 10px 20px 14px;
+  border-bottom: 1px solid #3A2F27;
+  margin-bottom: 18px;
+}
+
+.headline-rule {
+  border: none;
+  border-top: 0.8px solid #3A2F27;
+  margin: 7px auto;
+  width: 75%;
+}
+
+.headline-kicker {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.headline-main {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 3.2vw, 2.3rem);
+  font-weight: 900;
+  color: #28231E;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.18;
+  margin-bottom: 8px;
+}
+
+.headline-deck {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.02rem;
+  font-style: italic;
+  color: #3A2F27;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENT GRID (3 columns)
+   ═══════════════════════════════════════════════════════════ */
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid #3A2F27;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+
+.col-left,
+.col-centre,
+.col-right {
+  padding: 0 16px;
+}
+
+.col-left {
+  padding-left: 0;
+  border-right: 1px solid #3A2F27;
+}
+
+.col-centre {
+  border-right: 1px solid #3A2F27;
+}
+
+.col-right {
+  padding-right: 0;
+}
+
+/* ── Hero Portrait ── */
+.hero-portrait-wrap {
+  margin-bottom: 14px;
+}
+
+.portrait-plate {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #3A2F27;
+  box-shadow:
+    3px 3px 12px rgba(20,10,5,0.35),
+    inset 0 0 25px rgba(139,100,60,0.08);
+}
+
+.hero-portrait {
+  width: 100%;
+  display: block;
+}
+
+/* Halftone dot overlay on hero portrait */
+.halftone-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(139,100,60,0.04) 1px, transparent 1px);
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+.torn-edge-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 25px;
+  background: linear-gradient(to top, rgba(244,234,215,0.5) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.portrait-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(20,10,5,0.25) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Image Treatments ── */
+.img-bw {
+  filter: grayscale(100%) contrast(1.3) brightness(0.93) sepia(12%);
+}
+
+.img-bw-heavy {
+  /* Modern portrait: heavy conversion to match era */
+  filter: grayscale(100%) contrast(1.7) brightness(0.88) sepia(18%) blur(0.3px);
+}
+
+.img-bw-deep {
+  /* Archival: deeper blacks, mild silvering */
+  filter: grayscale(100%) contrast(1.45) brightness(0.82) sepia(8%);
+}
+
+/* ── Figure Captions ── */
+.fig-caption {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.58rem;
+  color: #2A2A2A;
+  margin-top: 5px;
+  letter-spacing: 0.04em;
+  opacity: 0.78;
+  display: block;
+}
+
+.askew-caption {
+  transform: rotate(-1deg);
+  display: inline-block;
+}
+
+.askew-caption-right {
+  transform: rotate(1.5deg);
+  display: inline-block;
+}
+
+/* ── Body Text ── */
+.body-text-block {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.84rem;
+  line-height: 1.58;
+  color: #28231E;
+  margin-bottom: 14px;
+}
+
+.body-text-block p {
+  margin-bottom: 8px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ── Secondary Portrait (Simon) ── */
+.secondary-portrait-wrap {
+  margin-top: 10px;
+}
+
+.photo-corners-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 2px 2px 8px rgba(20,10,5,0.28);
+}
+
+/* Photo corner tabs */
+.photo-corner-tl,
+.photo-corner-tr,
+.photo-corner-bl,
+.photo-corner-br {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 2;
+}
+
+.photo-corner-tl {
+  top: 4px; left: 4px;
+  border-top: 2px solid #3A2F27;
+  border-left: 2px solid #3A2F27;
+}
+.photo-corner-tr {
+  top: 4px; right: 4px;
+  border-top: 2px solid #3A2F27;
+  border-right: 2px solid #3A2F27;
+}
+.photo-corner-bl {
+  bottom: 4px; left: 4px;
+  border-bottom: 2px solid #3A2F27;
+  border-left: 2px solid #3A2F27;
+}
+.photo-corner-br {
+  bottom: 4px; right: 4px;
+  border-bottom: 2px solid #3A2F27;
+  border-right: 2px solid #3A2F27;
+}
+
+.secondary-portrait {
+  width: 100%;
+  display: block;
+}
+
+/* Grain overlay on modern portrait */
+.photo-grain-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.12'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+/* ── Column Rules ── */
+.column-rule {
+  border: none;
+  border-top: 0.8px solid #3A2F27;
+  margin: 13px 0;
+  opacity: 0.45;
+}
+
+/* ── Article Sections ── */
+.article-section {
+  margin-bottom: 2px;
+}
+
+.section-head {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid #3A2F27;
+}
+
+.article-section p {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.84rem;
+  line-height: 1.58;
+  color: #28231E;
+  margin-bottom: 7px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ── Proclamation ── */
+.proclamation-section {
+  background: rgba(139,100,60,0.05);
+  border: 0.5px solid #3A2F27;
+  padding: 12px 14px;
+  margin-top: 6px;
+}
+
+.proclamation-intro {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: #28231E;
+  margin-bottom: 8px;
+}
+
+.proclamation-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: #28231E;
+  line-height: 1.65;
+  border-left: 2px solid #7A1E1E;
+  padding-left: 10px;
+  margin: 8px 0;
+}
+
+.proclamation-close {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: #28231E;
+  text-align: right;
+  margin-top: 8px;
+}
+
+/* ── MEN WANTED Clipping ── */
+.clipping-wrap {
+  margin-bottom: 16px;
+  transform: rotate(-2.8deg);
+  transform-origin: top right;
+  margin-left: -10px; /* overlap toward hero portrait */
+  position: relative;
+  z-index: 2;
+}
+
+.newspaper-clipping {
+  background-color: #E5D4A0;
+  border: 1px solid #8B6A3A;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    4px 4px 14px rgba(20,10,5,0.4),
+    inset 0 0 20px rgba(139,100,60,0.1);
+  /* Torn paper edges via clip-path */
+  clip-path: polygon(
+    0% 1.5%, 2% 0%, 5% 1%, 8% 0%, 11% 1.5%, 14% 0%, 17% 1%, 20% 0.5%, 23% 1.5%,
+    26% 0%, 29% 1%, 32% 0.5%, 35% 1.5%, 38% 0%, 41% 1%, 44% 0.5%, 47% 1.5%,
+    50% 0%, 53% 1%, 56% 0.5%, 59% 1.5%, 62% 0%, 65% 1%, 68% 0.5%, 71% 1.5%,
+    74% 0%, 77% 1%, 80% 0.5%, 83% 1.5%, 86% 0%, 89% 1%, 92% 0.5%, 95% 1.5%,
+    98% 0%, 100% 1.5%, 99.5% 5%, 100% 8%, 99.5% 11%, 100% 14%, 99.5% 17%,
+    100% 20%, 99.5% 23%, 100% 26%, 99.5% 29%, 100% 32%, 99.5% 35%, 100% 38%,
+    99.5% 41%, 100% 44%, 99.5% 47%, 100% 50%, 99.5% 53%, 100% 56%, 99.5% 59%,
+    100% 62%, 99.5% 65%, 100% 68%, 99.5% 71%, 100% 74%, 99.5% 77%, 100% 80%,
+    99.5% 83%, 100% 86%, 99.5% 89%, 100% 92%, 99.5% 95%, 100% 98%, 98% 100%,
+    95% 99%, 92% 100%, 89% 99%, 86% 100%, 83% 99%, 80% 100%, 77% 99%,
+    74% 100%, 71% 99%, 68% 100%, 65% 99%, 62% 100%, 59% 99%, 56% 100%,
+    53% 99%, 50% 100%, 47% 99%, 44% 100%, 41% 99%, 38% 100%, 35% 99%,
+    32% 100%, 29% 99%, 26% 100%, 23% 99%, 20% 100%, 17% 99%, 14% 100%,
+    11% 99%, 8% 100%, 5% 99%, 2% 100%, 0% 98.5%, 0.5% 95%, 0% 92%,
+    0.5% 89%, 0% 86%, 0.5% 83%, 0% 80%, 0.5% 77%, 0% 74%, 0.5% 71%,
+    0% 68%, 0.5% 65%, 0% 62%, 0.5% 59%, 0% 56%, 0.5% 53%, 0% 50%,
+    0.5% 47%, 0% 44%, 0.5% 41%, 0% 38%, 0.5% 35%, 0% 32%, 0.5% 29%,
+    0% 26%, 0.5% 23%, 0% 20%, 0.5% 17%, 0% 14%, 0.5% 11%, 0% 8%,
+    0.5% 5%, 0% 1.5%
+  );
+}
+
+/* Newsprint line texture */
+.clipping-lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 17px,
+    rgba(100,70,30,0.06) 17px,
+    rgba(100,70,30,0.06) 18px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.clipping-photo {
+  width: 100%;
+  display: block;
+  filter: sepia(30%) contrast(1.15) brightness(1.05);
+  position: relative;
+  z-index: 0;
+}
+
+/* Halftone overlay on clipping */
+.clipping-halftone {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(100,70,30,0.06) 1px, transparent 1px);
+  background-size: 3px 3px;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+/* ── Archival Portrait ── */
+.archival-portrait-wrap {
+  margin-bottom: 14px;
+}
+
+.archival-plate {
+  border: 1px solid #3A2F27;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    3px 3px 10px rgba(20,10,5,0.32),
+    inset 0 0 20px rgba(0,0,0,0.12);
+}
+
+.archival-portrait {
+  width: 100%;
+  display: block;
+}
+
+.archival-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(20,10,5,0.3) 100%);
+  pointer-events: none;
+}
+
+.dust-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23d)' opacity='0.06'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* ── Classifieds ── */
+.classifieds-box {
+  border: 0.5px solid #3A2F27;
+  padding: 10px 12px;
+  background: rgba(139,100,60,0.04);
+}
+
+.classifieds-head {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid #3A2F27;
+}
+
+.classified-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #28231E;
+  margin-bottom: 5px;
+}
+
+.classified-body {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.76rem;
+  line-height: 1.48;
+  color: #28231E;
+  margin-bottom: 5px;
+}
+
+.classified-list {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 6px 0;
+}
+
+.classified-list li {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.74rem;
+  line-height: 1.48;
+  color: #28231E;
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.classified-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #3A2F27;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ADVERTISEMENTS ROW
+   ═══════════════════════════════════════════════════════════ */
+
+.adverts-rule {
+  border: none;
+  border-top: 1px solid #3A2F27;
+  margin: 0 0 12px;
+}
+
+.adverts-row {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+  padding-bottom: 12px;
+}
+
+.advert-item {
+  flex: 1;
+  padding: 0 14px;
+  text-align: center;
+}
+
+.advert-item:first-child {
+  padding-left: 0;
+}
+
+.advert-item:last-child {
+  padding-right: 0;
+}
+
+.advert-divider {
+  font-size: 0.75rem;
+  color: #3A2F27;
+  opacity: 0.45;
+  padding-top: 5px;
+  flex-shrink: 0;
+}
+
+.advert-head {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #28231E;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.advert-body {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.71rem;
+  line-height: 1.48;
+  color: #28231E;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LETTERS TO THE EDITOR
+   ═══════════════════════════════════════════════════════════ */
+
+.letters-section {
+  padding: 14px 0;
+  border-bottom: 1px solid #3A2F27;
+  margin-bottom: 14px;
+}
+
+.letters-head {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.letters-grid {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+}
+
+.letter-item {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.letter-item:first-child {
+  padding-left: 0;
+}
+
+.letter-item:last-child {
+  padding-right: 0;
+}
+
+.letter-divider {
+  font-size: 0.9rem;
+  color: #3A2F27;
+  opacity: 0.38;
+  padding-top: 22px;
+  flex-shrink: 0;
+}
+
+.letter-salutation {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #28231E;
+  margin-bottom: 6px;
+}
+
+.letter-item p {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.82rem;
+  line-height: 1.58;
+  color: #28231E;
+  margin-bottom: 6px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.letter-sign {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.79rem;
+  line-height: 1.55;
+  color: #28231E;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INTERVIEW SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+.interview-section {
+  padding: 10px 0;
+  border-bottom: 1px solid #3A2F27;
+  margin-bottom: 14px;
+}
+
+.interview-rule {
+  border: none;
+  border-top: 0.5px solid #3A2F27;
+  margin: 7px 0;
+}
+
+.interview-head {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.interview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 28px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.qa-item {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.82rem;
+  line-height: 1.52;
+  color: #28231E;
+  padding: 3px 0;
+  border-bottom: 0.3px solid rgba(58,47,39,0.2);
+}
+
+.qa-q {
+  font-weight: 600;
+  font-style: italic;
+  color: #3A2F27;
+  margin-right: 4px;
+}
+
+.qa-a {
+  color: #28231E;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SIGNATURE + SEAL ROW
+   ═══════════════════════════════════════════════════════════ */
+
+.sig-seal-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 14px 0 6px;
+  gap: 20px;
+}
+
+.signature-block {
+  flex: 1;
+  opacity: 0.9;
+}
+
+.sig-line {
+  border-top: 1px solid #28231E;
+  width: 170px;
+  margin-bottom: 7px;
+}
+
+.sig-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: #28231E;
+  margin-bottom: 2px;
+}
+
+.sig-note {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: #3A2F27;
+  opacity: 0.82;
+}
+
+.motto-block {
+  flex: 1;
+  text-align: center;
+}
+
+.motto-latin {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.motto-translation {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.68rem;
+  color: #3A2F27;
+  opacity: 0.78;
+}
+
+/* ── Wax Seal ── */
+.seal-block {
+  flex: 0 0 auto;
+}
+
+.wax-seal {
+  width: 130px;
+  height: 130px;
+}
+
+.seal-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.82;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+
+.gazette-footer {
+  text-align: center;
+  padding: 7px 0 3px;
+}
+
+.footer-rule {
+  border: none;
+  border-top: 1px solid #3A2F27;
+  margin: 5px 0;
+}
+
+.footer-text {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  color: #3A2F27;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE ADJUSTMENTS
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 960px) {
+  .content-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .col-right {
+    grid-column: 1 / -1;
+    border-right: none;
+    border-top: 1px solid #3A2F27;
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .clipping-wrap {
+    margin-left: 0;
+  }
+  .col-left {
+    border-right: 1px solid #3A2F27;
+  }
+  .col-centre {
+    border-right: none;
+  }
+  .adverts-row {
+    flex-wrap: wrap;
+  }
+  .advert-item {
+    flex: 0 0 45%;
+  }
+  .letters-grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .letter-divider {
+    display: none;
+  }
+  .letter-item {
+    padding: 0;
+  }
+  .interview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .gazette-wrapper {
+    padding: 20px 14px 40px;
+  }
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  .col-left,
+  .col-centre {
+    border-right: none;
+    border-bottom: 1px solid #3A2F27;
+    padding: 14px 0;
+  }
+  .col-right {
+    grid-template-columns: 1fr;
+    border-bottom: none;
+    padding-top: 14px;
+  }
+  .gazette-title {
+    font-size: 2rem;
+  }
+  .headline-main {
+    font-size: 1.25rem;
+  }
+  .masthead-meta {
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.62rem;
+  }
+  .meta-center {
+    display: none;
+  }
+  .adverts-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .advert-item {
+    flex: 1 0 100%;
+    padding: 8px 0;
+    border-bottom: 0.5px solid #3A2F27;
+  }
+  .advert-divider {
+    display: none;
+  }
+  .sig-seal-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+  .sig-line {
+    margin: 0 auto 7px;
+  }
+  .outer-frame {
+    margin: 6px 4px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRINT STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media print {
+  body {
+    background: none;
+  }
+  .paper-texture,
+  .vignette,
+  .watermark-bg {
+    display: none;
+  }
+  .gazette-wrapper {
+    box-shadow: none;
+    padding: 0;
+    max-width: 100%;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DULWICH COLLEGE CREST — MASTHEAD
+   ═══════════════════════════════════════════════════════════ */
+
+.masthead-crest {
+  flex-shrink: 0;
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crest-img {
+  width: 80px;
+  height: auto;
+  display: block;
+}
+
+/* Convert the crest to match the aged monochrome aesthetic */
+.crest-bw {
+  filter: grayscale(100%) contrast(1.35) brightness(0.82) sepia(15%);
+  opacity: 0.78;
+}
+
+.gazette-sub-kicker {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.62rem;
+  font-style: italic;
+  color: #3A2F27;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+  opacity: 0.75;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SOURCE ARTICLE (the article that letters respond to)
+   ═══════════════════════════════════════════════════════════ */
+
+.source-article {
+  background: rgba(139,100,60,0.04);
+  border-left: 2px solid #7A1E1E;
+  padding-left: 10px;
+  margin-bottom: 4px;
+}
+
+.article-byline {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: #5A4A3A;
+  margin-bottom: 7px;
+  letter-spacing: 0.02em;
+}
+
+.article-close {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: #3A2F27;
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FILLER NOTE (Twin Chronology)
+   ═══════════════════════════════════════════════════════════ */
+
+.filler-note {
+  background: rgba(139,100,60,0.03);
+  border: 0.5px dashed rgba(58,47,39,0.4);
+  padding: 8px 10px;
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WEATHER BOX
+   ═══════════════════════════════════════════════════════════ */
+
+.weather-box {
+  margin-top: 12px;
+  border: 0.5px solid #3A2F27;
+  padding: 8px 10px;
+  background: rgba(139,100,60,0.04);
+}
+
+.weather-head {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: #28231E;
+  text-align: center;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.weather-body {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: #28231E;
+  font-style: italic;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LETTERS PREAMBLE
+   ═══════════════════════════════════════════════════════════ */
+
+.letters-preamble {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #5A4A3A;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DOCTRINE DIAGRAM
+   ═══════════════════════════════════════════════════════════ */
+
+.doctrine-diagram {
+  margin-top: 12px;
+  border: 0.8px solid #3A2F27;
+  padding: 8px;
+  background: rgba(244,234,215,0.6);
+  text-align: center;
+}
+
+.diagram-title {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.diagram-sub {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.65rem;
+  font-style: italic;
+  color: #5A4A3A;
+  margin-bottom: 6px;
+}
+
+.diagram-body {
+  width: 100%;
+}
+
+.doctrine-svg {
+  width: 100%;
+  height: auto;
+  max-height: 130px;
+}
+
+.diagram-caption {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 0.52rem;
+  color: #5A4A3A;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLASSIFIED DIVIDER
+   ═══════════════════════════════════════════════════════════ */
+
+.classified-divider {
+  text-align: center;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.7rem;
+  color: #3A2F27;
+  opacity: 0.5;
+  margin: 6px 0;
+  letter-spacing: 0.2em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOTTO FOOTER LINE
+   ═══════════════════════════════════════════════════════════ */
+
+.motto-footer-line {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: #3A2F27;
+  opacity: 0.65;
+  margin-top: 6px;
+  text-align: center;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   EXPEDITIONARY RECORD TABLE
+   ═══════════════════════════════════════════════════════════ */
+
+.record-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.78rem;
+  color: #28231E;
+}
+
+.record-table th {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #28231E;
+  border-top: 1px solid #3A2F27;
+  border-bottom: 1px solid #3A2F27;
+  padding: 5px 8px;
+  text-align: left;
+  background: rgba(139,100,60,0.05);
+}
+
+.record-table td {
+  padding: 4px 8px;
+  border-bottom: 0.5px solid rgba(58,47,39,0.25);
+  line-height: 1.45;
+  vertical-align: top;
+}
+
+.record-table tbody tr:nth-child(even) {
+  background: rgba(139,100,60,0.03);
+}
+
+.record-table tbody tr:last-child td {
+  border-bottom: 1px solid #3A2F27;
+  font-style: italic;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   3-PAGE TRIPTYCH LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+
+/* Each page is a self-contained A3 unit */
+.gazette-page {
+  position: relative;
+  margin-bottom: 0;
+}
+
+/* Page break divider between pages */
+.page-break-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 0 22px;
+  margin: 0 30px;
+}
+
+.page-break-rule {
+  flex: 1;
+  border: none;
+  border-top: 2px solid #3A2F27;
+  opacity: 0.35;
+}
+
+.page-break-ornament {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  color: #3A2F27;
+  opacity: 0.45;
+  letter-spacing: 0.4em;
+  flex-shrink: 0;
+}
+
+/* Continuation masthead — slightly smaller than the main one */
+.masthead-continuation .gazette-title {
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+}
+
+.masthead-continuation .masthead-crest {
+  width: 70px;
+}
+
+.masthead-continuation .crest-img {
+  width: 60px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESCUE SECTION (Spitsbergen)
+   ═══════════════════════════════════════════════════════════ */
+
+.rescue-section {
+  background: rgba(139,100,60,0.03);
+  border: 0.5px solid rgba(58,47,39,0.35);
+  padding: 8px 10px;
+  margin-top: 4px;
+}
+
+.rescue-section h3 {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: #28231E;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid #3A2F27;
+}
+
+.rescue-section p {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.81rem;
+  line-height: 1.56;
+  color: #28231E;
+  margin-bottom: 6px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   POEM BLOCK
+   ═══════════════════════════════════════════════════════════ */
+
+.poem-block {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.72;
+  color: #28231E;
+  padding: 8px 12px;
+  border-left: 2px solid rgba(122,30,30,0.5);
+  margin: 8px 0;
+  background: rgba(139,100,60,0.03);
+}
+
+.poem-block p {
+  margin: 0;
+  line-height: 1.72;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ADVERT BLOCK (inline classified style)
+   ═══════════════════════════════════════════════════════════ */
+
+.advert-block {
+  margin-bottom: 4px;
+}
+
+.advert-block .advert-head {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #28231E;
+  margin-bottom: 3px;
+  text-align: left;
+}
+
+.advert-block .advert-body {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: #28231E;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRINT: PAGE BREAKS FOR PDF GENERATION
+   ═══════════════════════════════════════════════════════════ */
+
+@media print {
+  .gazette-page {
+    page-break-after: always;
+    break-after: page;
+  }
+  .gazette-page:last-child {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .page-break-divider {
+    display: none;
+  }
+}
+
+.image-box {
+  margin-bottom: 12px;
+}
+
+.image-box img {
+  width: 100%;
+  display: block;
+  border: 1px solid #3A2F27;
+}
+
+.image-box .fig-caption {
+  margin-top: 4px;
+  font-size: 0.6rem;
+  text-align: center;
+}
