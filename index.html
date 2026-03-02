@@ -116,12 +116,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 0;
             margin-bottom: 8px;
         }
 
+        .crest-block {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            flex-shrink: 0;
+        }
+
         .crest-img {
-            height: 64px;
+            height: 52px;
             filter: grayscale(1) contrast(1.1) sepia(0.15) brightness(0.88);
             opacity: 0.85;
         }
@@ -152,6 +159,20 @@
             border-top: 1px solid #3A2F27;
             padding-top: 8px;
             margin-top: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .masthead-motto {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.78rem;
+            font-style: italic;
+            letter-spacing: 0.18em;
+            color: #3A2F27;
+            text-align: center;
+            margin-top: 4px;
+            padding-bottom: 2px;
         }
 
         .masthead-meta .sep { margin: 0 12px; color: #7A6A5A; }
@@ -175,11 +196,12 @@
 
         .headline-main {
             font-family: 'Playfair Display', serif;
-            font-size: 2.6rem;
+            font-size: 2.05rem;
             font-weight: 900;
             line-height: 1.15;
             margin-bottom: 8px;
             color: #1C1610;
+            white-space: nowrap;
         }
 
         .deck {
@@ -748,16 +770,21 @@
 
         <header class="masthead">
             <div class="masthead-row">
-                <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img">
-                <div>
+                <div class="crest-block">
+                    <img src="images/dulwich_crest.jpg" alt="Dulwich College" class="crest-img">
+                </div>
+                <div style="flex:1; text-align:center;">
                     <h1 class="gazette-title">The Dulwich Gazette</h1>
                     <p class="gazette-subtitle">Special Polar &amp; Domestic Enterprise Edition</p>
                 </div>
-                <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img">
+                <div class="crest-block" style="justify-content:flex-end;">
+                    <img src="images/dulwich_crest.jpg" alt="Dulwich College" class="crest-img">
+                </div>
             </div>
             <div class="masthead-meta">
-                March 3rd, 1914 <span class="sep">·</span> (Quite Remarkably Also 2026) <span class="sep">⬥</span> Printed by the Dulwich Press <span class="sep">⬥</span> Price: One Penny <span class="sep">⬥</span> <em>Detur Gloria Soli Deo</em>
+                March 3rd, 1914 <span class="sep">·</span> (Quite Remarkably Also 2026) <span class="sep">⬥</span> Printed by the Dulwich Press <span class="sep">⬥</span> Price: One Penny
             </div>
+            <div class="masthead-motto">Detur Gloria Soli Deo</div>
         </header>
 
         <div class="headline-band">
