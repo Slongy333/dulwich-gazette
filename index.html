@@ -1,710 +1,1182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Dulwich Gazette — Special Polar Edition</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Mono:wght@400;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dulwich Gazette — Definitive Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════
+           THE DULWICH GAZETTE — DEFINITIVE EDITION CSS
+           ═══════════════════════════════════════════════ */
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { font-size: 16px; }
+
+        body {
+            background: #1a1008;
+            font-family: 'EB Garamond', serif;
+            font-size: 10.5pt;
+            line-height: 1.55;
+            color: #28231E;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── AGED PAPER BACKGROUND ── */
+        .gazette-wrapper {
+            position: relative;
+            max-width: 1140px;
+            margin: 0 auto;
+            background-color: #F3E8D0;
+            background-image:
+                radial-gradient(ellipse 300px 400px at 0% 30%, rgba(139,100,55,0.12) 0%, transparent 100%),
+                radial-gradient(ellipse 300px 400px at 100% 70%, rgba(139,100,55,0.10) 0%, transparent 100%),
+                radial-gradient(ellipse 600px 120px at 50% 0%, rgba(100,70,30,0.10) 0%, transparent 100%),
+                radial-gradient(ellipse 600px 150px at 50% 100%, rgba(100,70,30,0.12) 0%, transparent 100%);
+            box-shadow: 0 0 100px rgba(10,5,0,0.9), inset 0 0 120px rgba(139,100,60,0.10);
+            overflow: hidden;
+        }
+
+        /* Foxing spots */
+        .gazette-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(ellipse 18px 12px at 8% 12%, rgba(139,100,55,0.18) 0%, transparent 100%),
+                radial-gradient(ellipse 10px 8px at 92% 8%, rgba(139,100,55,0.14) 0%, transparent 100%),
+                radial-gradient(ellipse 22px 15px at 5% 45%, rgba(139,100,55,0.12) 0%, transparent 100%),
+                radial-gradient(ellipse 14px 10px at 95% 55%, rgba(139,100,55,0.16) 0%, transparent 100%),
+                radial-gradient(ellipse 20px 14px at 15% 88%, rgba(139,100,55,0.14) 0%, transparent 100%),
+                radial-gradient(ellipse 12px 8px at 85% 92%, rgba(139,100,55,0.18) 0%, transparent 100%),
+                radial-gradient(ellipse 8px 6px at 50% 5%, rgba(139,100,55,0.10) 0%, transparent 100%),
+                radial-gradient(ellipse 16px 11px at 72% 78%, rgba(139,100,55,0.13) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Paper grain texture */
+        .gazette-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.22 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)'/%3E%3C/svg%3E");
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Vignette */
+        .vignette {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 50%, rgba(10,5,0,0.6) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Watermark ghost */
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            opacity: 0.04;
+            filter: grayscale(1) contrast(300%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── GAZETTE PAGE ── */
+        .gazette-page {
+            position: relative;
+            z-index: 2;
+            padding: 36px 44px 40px;
+            border-bottom: 4px double #3A2F27;
+            margin-bottom: 0;
+        }
+
+        .gazette-page + .gazette-page {
+            border-top: none;
+        }
+
+        /* ── MASTHEAD ── */
+        .masthead {
+            text-align: center;
+            padding-bottom: 14px;
+            border-bottom: 3px double #3A2F27;
+            margin-bottom: 20px;
+        }
+
+        .masthead-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 8px;
+        }
+
+        .crest-img {
+            height: 64px;
+            filter: grayscale(1) contrast(1.1) sepia(0.15) brightness(0.88);
+            opacity: 0.85;
+        }
+
+        .gazette-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.8rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #1C1610;
+            letter-spacing: -0.01em;
+        }
+
+        .gazette-subtitle {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.35em;
+            color: #3A2F27;
+            margin-top: 6px;
+        }
+
+        .masthead-meta {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #3A2F27;
+            border-top: 1px solid #3A2F27;
+            padding-top: 8px;
+            margin-top: 10px;
+        }
+
+        .masthead-meta .sep { margin: 0 12px; color: #7A6A5A; }
+
+        /* ── HEADLINE BAND ── */
+        .headline-band {
+            text-align: center;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #3A2F27;
+        }
+
+        .kicker {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: #7A1E1E;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .headline-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 8px;
+            color: #1C1610;
+        }
+
+        .deck {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.15rem;
+            font-style: italic;
+            color: #555;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* ── THREE-COLUMN GRID ── */
+        .col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+        }
+
+        .col {
+            padding: 0 20px;
+        }
+
+        .col:first-child { padding-left: 0; border-right: 1px solid rgba(58,47,39,0.3); }
+        .col:last-child { padding-right: 0; }
+        .col:nth-child(2) { border-right: 1px solid rgba(58,47,39,0.3); }
+
+        /* ── SECTION HEADINGS ── */
+        .section-rule {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #3A2F27;
+            border-top: 2px solid #3A2F27;
+            border-bottom: 1px solid #3A2F27;
+            padding: 4px 0;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 4px;
+            color: #1C1610;
+        }
+
+        .byline {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: #666;
+            margin-bottom: 10px;
+            border-bottom: 1px dotted rgba(58,47,39,0.4);
+            padding-bottom: 6px;
+        }
+
+        /* ── BODY TEXT ── */
+        p {
+            text-align: justify;
+            hyphens: auto;
+            margin-bottom: 9px;
+            font-size: 10.5pt;
+            line-height: 1.55;
+        }
+
+        .drop-cap::first-letter {
+            font-family: 'Playfair Display', serif;
+            float: left;
+            font-size: 3.8em;
+            line-height: 0.82;
+            padding-right: 5px;
+            margin-top: 5px;
+            font-weight: 700;
+            color: #1C1610;
+        }
+
+        /* ── PULL QUOTE ── */
+        .pull-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.4;
+            text-align: center;
+            margin: 14px 0;
+            padding: 10px 8px;
+            border-top: 1px solid #3A2F27;
+            border-bottom: 1px solid #3A2F27;
+            color: #7A1E1E;
+            break-inside: avoid;
+        }
+
+        /* ── FIGURES & IMAGES ── */
+        figure {
+            margin: 0 0 12px 0;
+            break-inside: avoid;
+        }
+
+        figure img {
+            width: 100%;
+            display: block;
+            border: 1px solid #8B7355;
+            padding: 5px;
+            background: #F0E4CC;
+            box-shadow: 3px 3px 14px rgba(20,10,5,0.40);
+            filter: grayscale(1) contrast(1.15) sepia(0.18) brightness(0.93);
+        }
+
+        .figure-torn {
+            position: relative;
+        }
+
+        .figure-torn img {
+            transform: rotate(-1.5deg);
+            box-shadow: 4px 4px 16px rgba(20,10,5,0.45);
+        }
+
+        figcaption {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #666;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        /* ── DIVIDER ── */
+        .col-divider {
+            border: none;
+            border-top: 1px solid rgba(58,47,39,0.4);
+            margin: 14px 0;
+        }
+
+        /* ── CLASSIFIEDS & BOXES ── */
+        .classified-box {
+            border: 1px solid #3A2F27;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            background: rgba(139,100,55,0.05);
+        }
+
+        .classified-box h4 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3A2F27;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+
+        .classified-box p {
+            font-size: 9.5pt;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .classified-box p:last-child { margin-bottom: 0; }
+
+        /* ── LETTERS ── */
+        .letter {
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px dotted rgba(58,47,39,0.4);
+        }
+
+        .letter:last-child { border-bottom: none; }
+
+        .letter-sig {
+            font-style: italic;
+            text-align: right;
+            font-size: 9.5pt;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        /* ── TABLE ── */
+        .gazette-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+            margin-bottom: 12px;
+        }
+
+        .gazette-table th {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-top: 2px solid #3A2F27;
+            border-bottom: 1px solid #3A2F27;
+            padding: 4px 6px;
+            text-align: left;
+            background: rgba(139,100,55,0.07);
+        }
+
+        .gazette-table td {
+            padding: 4px 6px;
+            border-bottom: 1px solid rgba(58,47,39,0.2);
+            vertical-align: top;
+        }
+
+        .gazette-table tr:last-child td {
+            border-bottom: 2px solid #3A2F27;
+        }
+
+        /* ── POEM / ODE ── */
+        .poem {
+            font-style: italic;
+            font-size: 10pt;
+            line-height: 1.7;
+            margin: 10px 0;
+            padding-left: 12px;
+            border-left: 2px solid rgba(58,47,39,0.3);
+        }
+
+        .poem-attribution {
+            font-size: 9pt;
+            text-align: right;
+            color: #666;
+            margin-top: 6px;
+        }
+
+        /* ── SIGNATURE & SEAL ── */
+        .colophon {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
+            border-top: 2px solid #3A2F27;
+            border-bottom: 2px solid #3A2F27;
+            padding: 14px 0;
+            margin-top: 20px;
+        }
+
+        .colophon-sig {
+            text-align: left;
+        }
+
+        .colophon-sig img {
+            height: 52px;
+            filter: brightness(0.35) contrast(1.6) sepia(0.1);
+        }
+
+        .colophon-sig p {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-align: left;
+            margin-bottom: 0;
+        }
+
+        .colophon-motto {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #3A2F27;
+        }
+
+        .seal-svg {
+            text-align: right;
+        }
+
+        /* ── PAGE FOOTER ── */
+        .page-footer {
+            text-align: center;
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #3A2F27;
+            border-top: 1px solid #3A2F27;
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+
+        /* ── WEATHER BOX ── */
+        .weather-box {
+            border: 1px solid #3A2F27;
+            padding: 8px 10px;
+            margin-bottom: 12px;
+            font-size: 9.5pt;
+        }
+
+        .weather-box h4 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3A2F27;
+            padding-bottom: 3px;
+            margin-bottom: 6px;
+        }
+
+        /* ── SPITSBERGEN BOX ── */
+        .facts-box {
+            border: 2px solid #3A2F27;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            background: rgba(139,100,55,0.05);
+        }
+
+        .facts-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .facts-box ol {
+            padding-left: 18px;
+            font-size: 9.5pt;
+        }
+
+        .facts-box ol li {
+            margin-bottom: 5px;
+            text-align: justify;
+        }
+
+        /* ── LEXICON BOX ── */
+        .lexicon-box {
+            border: 1px solid #3A2F27;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+        }
+
+        .lexicon-box h4 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3A2F27;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .lexicon-entry {
+            margin-bottom: 7px;
+            font-size: 9.5pt;
+        }
+
+        .lexicon-entry strong {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── PHRENOLOGY BOX ── */
+        .phrenology-box {
+            border: 1px solid #3A2F27;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            background: rgba(139,100,55,0.04);
+        }
+
+        .phrenology-box h4 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3A2F27;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .phrenology-box p { font-size: 9.5pt; }
+
+        /* ── INTERVIEW ── */
+        .interview-q {
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+
+        .interview-a {
+            margin-bottom: 10px;
+            padding-left: 12px;
+            border-left: 2px solid rgba(58,47,39,0.3);
+        }
+
+        /* ── COMPARATIVE TABLE ── */
+        .compare-box {
+            border: 1px solid #3A2F27;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+        }
+
+        .compare-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        /* ── POLAR CONDITIONS ── */
+        .conditions-box {
+            border: 1px solid #3A2F27;
+            padding: 8px 10px;
+            margin-bottom: 12px;
+            font-size: 9.5pt;
+        }
+
+        .conditions-box h4 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3A2F27;
+            padding-bottom: 3px;
+            margin-bottom: 6px;
+        }
+
+        /* ── PAGE 2 MASTHEAD (smaller) ── */
+        .page-masthead-small {
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px double #3A2F27;
+            margin-bottom: 16px;
+        }
+
+        .page-masthead-small h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #1C1610;
+        }
+
+        .page-masthead-small .page-meta {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            color: #3A2F27;
+            margin-top: 4px;
+        }
+
+        /* ── WARDROBE BOX ── */
+        .wardrobe-box {
+            border: 1px solid #3A2F27;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+        }
+
+        .wardrobe-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .wardrobe-item {
+            font-size: 9.5pt;
+            margin-bottom: 5px;
+            padding-left: 12px;
+            border-left: 2px solid rgba(58,47,39,0.25);
+        }
+
+        /* ── FURTHER CORRESPONDENCE ── */
+        .further-corr {
+            border: 1px solid #3A2F27;
+            padding: 10px 12px;
+            margin-top: 14px;
+        }
+
+        .further-corr h4 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3A2F27;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .further-corr p { font-size: 9.5pt; }
+
+        /* ── PRINT MEDIA ── */
+        @media print {
+            body { background: #F3E8D0; }
+            .gazette-wrapper { box-shadow: none; max-width: 100%; }
+            .gazette-page { padding: 20px 30px; }
+            .vignette { display: none; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="paper-texture"></div>
-  <div class="vignette"></div>
-  <div class="watermark-bg">
-    <img src="images/hurley_endurance_ice.jpg" alt="" aria-hidden="true" />
-  </div>
+<div class="vignette"></div>
 
-  <main class="gazette-wrapper">
+<div class="gazette-wrapper">
 
-    <!-- ══════════════════════════════════════════════════════════════ -->
-    <!-- PAGE 1 -->
-    <!-- ══════════════════════════════════════════════════════════════ -->
-    <div class="gazette-page" id="page-1">
+    <!-- WATERMARK -->
+    <img class="watermark" src="images/antony_standing.png" alt="" aria-hidden="true">
 
-      <!-- MASTHEAD -->
-      <header class="masthead">
-        <div class="masthead-rule top-rule"></div>
-        <div class="masthead-ornament-row">
-          <div class="masthead-crest left-crest">
-            <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img crest-bw" />
-          </div>
-          <div class="masthead-center">
-            <p class="gazette-kicker">IMPERIAL SOCIETY FOR NORTHERN RESOLVE &nbsp;·&nbsp; DULWICH DIVISION &nbsp;·&nbsp; EST. 1966</p>
-            <h1 class="gazette-title">The Dulwich Gazette</h1>
-            <p class="gazette-subtitle">SPECIAL POLAR &amp; DOMESTIC ENTERPRISE EDITION</p>
-            <p class="gazette-sub-kicker"><em>Detur Gloria Soli Deo</em> &nbsp;·&nbsp; <em>God's Gift</em> &nbsp;·&nbsp; Founded by Edward Alleyn, 1619</p>
-          </div>
-          <div class="masthead-crest right-crest">
-            <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img crest-bw" />
-          </div>
-        </div>
-        <div class="masthead-rule"></div>
-        <div class="masthead-meta">
-          <span>MARCH 3RD, 1914 &nbsp;·&nbsp; (QUITE REMARKABLY ALSO 2026)</span>
-          <span class="meta-divider">⬥</span>
-          <span>PRINTED BY THE DULWICH PRESS</span>
-          <span class="meta-divider">⬥</span>
-          <span>PRICE: ONE PENNY</span>
-        </div>
-        <div class="masthead-rule double-rule"></div>
-      </header>
+    <!-- ═══════════════════════════════════════════════════
+         PAGE 1 — THE FRONT PAGE
+         ═══════════════════════════════════════════════════ -->
+    <div class="gazette-page" id="page1">
 
-      <!-- HEADLINE BAND -->
-      <div class="headline-band">
-        <div class="headline-rule"></div>
-        <p class="headline-kicker">DISTINGUISHED OLD ALLEYN'S SCHOLAR</p>
-        <h2 class="headline-main">PROFESSOR ANTONY LONG<br/>EMBARKS UPON HIS SIXTIETH YEAR</h2>
-        <p class="headline-deck">Arctic Traveller, University Leader &amp; Gentleman of Singular Endurance</p>
-        <div class="headline-rule"></div>
-      </div>
-
-      <!-- CONTENT GRID PAGE 1 -->
-      <div class="content-grid">
-
-        <!-- LEFT COLUMN P1 -->
-        <div class="col-left">
-
-          <div class="hero-portrait-wrap">
-            <div class="portrait-plate">
-              <div class="halftone-overlay"></div>
-              <img src="images/shackleton_portrait.jpg" alt="FIG. I — Leader, A. Long" class="hero-portrait img-bw" />
-              <div class="torn-edge-overlay"></div>
-              <div class="portrait-vignette"></div>
+        <header class="masthead">
+            <div class="masthead-row">
+                <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img">
+                <div>
+                    <h1 class="gazette-title">The Dulwich Gazette</h1>
+                    <p class="gazette-subtitle">Special Polar &amp; Domestic Enterprise Edition</p>
+                </div>
+                <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img">
             </div>
-            <p class="fig-caption">FIG. I — Leader, A. Long &nbsp;·&nbsp; File 09/C</p>
-          </div>
-
-          <div class="body-text-block">
-            <p>It has come to the attention of this publication that Professor Antony Long, esteemed son of Dulwich College and veteran of numerous northern enterprises, has this day commenced his sixtieth year upon the globe.</p>
-            <p>Born but twenty minutes after his elder twin (a fact recorded with unwavering diligence in the Long family annals), Professor Long displayed ambition from the earliest age. Contemporary accounts suggest that his determination to stand upright was so vigorous as to delay the same achievement in his sibling by no fewer than six months.</p>
-            <p>Such drive has scarcely diminished in the intervening decades.</p>
-            <p>Like the illustrious Ernest Shackleton — likewise of Dulwich College, and likewise possessed of a certain magnificent stubbornness — Professor Long has long favoured the Polar regions over more temperate climates. His expeditions to Greenland and Spitsbergen have rendered him intimately acquainted with ice, wind, and adversity.</p>
-            <p>Where others perceive desolation, he discerns opportunity. Where others see a crevasse, he sees a problem to be solved. Where others feel the cold, he feels the clarifying force of the North — that particular quality of Arctic air which strips away all pretension and leaves only the essential man.</p>
-            <p>It is a quality he has carried into every arena of his life: the lecture hall, the committee room, the construction site, and the domestic hearth. In each, the same compass. In each, the same certainty of direction.</p>
-          </div>
-
-          <div class="secondary-portrait-wrap">
-            <div class="photo-corners-frame">
-              <div class="photo-corner-tl"></div>
-              <div class="photo-corner-tr"></div>
-              <div class="photo-corner-bl"></div>
-              <div class="photo-corner-br"></div>
-              <img src="images/simon_modern.png" alt="FIG. IV — S. Long (Elder. By Twenty Minutes.)" class="secondary-portrait img-bw-heavy" />
-              <div class="photo-grain-overlay"></div>
+            <div class="masthead-meta">
+                March 3rd, 1914 <span class="sep">·</span> (Quite Remarkably Also 2026) <span class="sep">⬥</span> Printed by the Dulwich Press <span class="sep">⬥</span> Price: One Penny <span class="sep">⬥</span> <em>Detur Gloria Soli Deo</em>
             </div>
-            <p class="fig-caption askew-caption">FIG. IV — S. Long (Elder. By Twenty Minutes.)</p>
-          </div>
+        </header>
 
-          <div class="weather-box">
-            <p class="weather-head">⬥ Meteorological Forecast ⬥</p>
-            <p class="weather-body">A bracing north-easterly is expected throughout the day, with a high probability of determined pronouncements and a negligible chance of wavering. Visibility: excellent. Conditions ideal for ambitious undertakings. Dress accordingly.</p>
-          </div>
-
-          <div class="column-rule" style="margin-top:12px;"></div>
-
-          <section class="article-section">
-            <h3 class="section-head">A Note on Twin-Based Chronology</h3>
-            <p>This paper wishes to clarify its official position on the matter of seniority between the Long twins. While it is a matter of record that Simon Long entered the world a full twenty minutes before his brother, it is the opinion of this publication that true seniority is established not by the clock, but by the compass. The man who knows the way, and who leads others upon it, is the elder in all matters of consequence. We trust this settles the matter.</p>
-            <p>This publication further notes that the twenty-minute interval in question has been the subject of sustained and, frankly, disproportionate commentary from the elder party over the intervening six decades. We recommend a period of dignified silence on the subject, punctuated only by the occasional acknowledgement that being second is not, in all circumstances, a disadvantage. It is, after all, the position from which one may observe the terrain ahead and correct for any errors made by the vanguard.</p>
-          </section>
-
-          <div class="column-rule"></div>
-
-          <div class="advert-block" style="margin-top:8px;">
-            <p class="advert-head">Classified Notices</p>
-            <p class="advert-head" style="font-size:0.72rem; margin-top:6px;">The Certainty Company</p>
-            <p class="advert-body">Purveyors of Unwavering Conviction since 1966. Is your domestic enterprise beset by doubt? Is your committee plagued by indecision? We supply premium-grade, non-negotiable certainty for all applications. Sold by the tonne. Satisfaction guaranteed.</p>
-          </div>
-
-          <div class="classified-divider">— ✦ —</div>
-
-          <div class="advert-block">
-            <p class="advert-head">For Sale: One Slightly Used Compass</p>
-            <p class="advert-body">Guaranteed to point North. No longer required by owner, who has internalised its function. Apply to the Department of Geography, Durham.</p>
-          </div>
-
-          <div class="classified-divider">— ✦ —</div>
-
-          <div class="advert-block">
-            <p class="advert-head">Polar Provisions Ltd.</p>
-            <p class="advert-body">Suppliers of Pemmican, Hoosh, and Fortifying Biscuit to the discerning expeditioner since 1907. Also available: a comprehensive selection of optimistic maps. "We have never yet lost a customer to the ice. Several to the committee room, but that is beyond our jurisdiction."</p>
-          </div>
-
+        <div class="headline-band">
+            <p class="kicker">Distinguished Old Alleyn's Scholar</p>
+            <h2 class="headline-main">Professor Antony Long Embarks Upon His Sixtieth Year</h2>
+            <p class="deck">An intimate portrait of the Arctic traveller, university leader, and gentleman of singular endurance, as he reaches a significant personal milestone.</p>
         </div>
 
-        <!-- CENTRE COLUMN P1 -->
-        <div class="col-centre">
+        <div class="col-grid">
 
-          <section class="article-section source-article">
-            <h3 class="section-head">On Leadership &amp; Moral Fortitude</h3>
-            <p class="article-byline"><em>From a conversation with this paper's correspondent, recorded in the field.</em></p>
-            <p>In a recent audience granted to this publication, Professor Antony Long offered his considered reflections upon a long and distinguished career in the service of knowledge, ice, and institutional governance. When pressed upon the essential quality of a leader, his reply was immediate and entirely unequivocal.</p>
-            <p>"Certainty," he stated. "In unstable climates — be they polar, political, or pertaining to domestic construction — the collective requires ballast. A leader does not merely indicate the way. He <em>is</em> the way. His own conviction is the fixed point upon which the entire enterprise turns. To waver is to invite chaos. To admit doubt is to concede defeat before the first step is taken."</p>
-            <p>The Professor's doctrine, which this paper has chosen to term The Long Doctrine, is one of uncompromising self-reliance. It holds that the correct course of action is always knowable, provided one has sufficient data and the moral courage to interpret it correctly. It is a philosophy forged in the unforgiving clarity of the high Arctic, where ambiguity is a luxury one cannot afford.</p>
-            <p>"The ice does not negotiate," the Professor explained, gesturing towards the glacial moraine that served as his temporary office. "The wind does not seek consensus. Nature presents a series of unambiguous facts. It is our task to respond with equal clarity. To do otherwise is to indulge in a form of intellectual vanity that has no place in a serious undertaking."</p>
-            <p>This doctrine, he concedes, has not always been met with universal acclaim in the more temperate corridors of academia. Yet the results, as recorded in the annals of this and other institutions, speak for themselves. The expeditions succeed. The departments flourish. The buildings, eventually, are built.</p>
-            <p>"Fortitude," he concluded, "is certainty in motion. It is the practical application of an unwavering belief in one's own course. Without it, one is merely a tourist."</p>
-          </section>
+            <!-- LEFT COLUMN -->
+            <div class="col">
+                <p class="section-rule">The Principal Account</p>
 
-          <div class="column-rule"></div>
+                <p class="drop-cap">It has come to the attention of this publication that Professor Antony Long, esteemed son of Dulwich College and veteran of numerous northern enterprises, has this day commenced his sixtieth year upon the globe. Born but twenty minutes after his elder twin — a fact recorded with unwavering diligence in the Long family annals — Professor Long displayed ambition from the earliest age. Contemporary accounts suggest that his determination to stand upright was so vigorous as to delay the same achievement in his sibling by no fewer than six months.</p>
 
-          <div class="image-box">
-            <img src="images/hurley_crushed.jpg" alt="The Endurance, crushed by ice." class="img-bw" />
-            <p class="fig-caption">The Endurance, trapped and crushed by the ice of the Weddell Sea. A lesson in the unforgiving nature of the polar environment.</p>
-          </div>
+                <p>Such drive has scarcely diminished in the intervening decades. Like the illustrious Ernest Shackleton — likewise of Dulwich College, and likewise possessed of a certain magnificent stubbornness — Professor Long has long favoured the Polar regions over more temperate climates. His expeditions to Greenland and Spitsbergen have rendered him intimately acquainted with ice, wind, and adversity. He has, in the considered opinion of this paper, been adequately prepared for both.</p>
 
-          <div class="column-rule"></div>
+                <figure>
+                    <img src="images/antony_turtleneck.png" alt="Professor Antony Long">
+                    <figcaption>FIG. I — Professor A. Long, a study in determined repose.</figcaption>
+                </figure>
 
-          <!-- SPITSBERGEN RESCUE — moved to centre column to balance page 1 -->
-          <section class="article-section rescue-section">
-            <h3 class="section-head">A Rescue of Uncommon Fortitude</h3>
-            <p class="article-byline"><em>From our Spitsbergen Correspondent, dispatched under conditions of some urgency.</em></p>
-            <p>Word has reached this paper of a recent incident in the Svalbard archipelago which demonstrates, in the most unambiguous terms, the calibre of men produced by Dulwich College. Professor Antony Long, engaged in glacial research near Ny-Ålesund, was leading a small party across a heavily crevassed ice-field when disaster struck with the sudden, indifferent brutality characteristic of the Arctic.</p>
-            <p>A junior colleague — a promising geologist from a lesser institution — lost her footing upon a deceptive snow bridge and plunged into the abyss below. Her fall was arrested some forty feet beneath the surface, but the impact resulted in a severely sprained ankle, rendering her entirely unable to walk. Her cries, though muffled by the ice, alerted the Professor, who, without a moment's deliberation, organised the rescue with the calm authority of a man who has never once entertained the possibility of failure.</p>
-            <p>While others debated the safest course of action, Professor Long had already established a secure anchor and was abseiling into the chasm. He found the injured party in a state of considerable distress, her ankle swelling at an alarming rate and her body temperature falling. With the calm authority for which he is known, he administered immediate first aid, speaking to her throughout in the measured, unhurried tones of a man for whom crisis is merely another form of weather.</p>
-            <p>The extrication was a masterpiece of improvised engineering. Yet the true test was to come.</p>
-            <p>With the injured geologist unable to walk, and the party's base camp a gruelling eight miles distant across terrain of the most hostile description — fractured ice, wind-scoured ridges, and the gathering dark of an Arctic evening — the situation appeared, to the uninitiated, desperate. Temperatures were plummeting towards minus twenty. The unmistakable tracks of a large male polar bear had been sighted only that morning, circling the camp with the unhurried confidence of a creature that has never been told it cannot do something.</p>
-            <p>Professor Long, dismissing all counsel of caution with a brevity that brooked no further discussion, hoisted the injured woman onto his back and began the march.</p>
-            <p>For six hours — six hours of unrelenting, lung-burning, muscle-destroying effort — he carried his charge through the gathering gloom and the biting wind, his pace scarcely slackening, his direction never wavering. When members of his party spoke of fatigue, he reminded them that "fatigue is a state of mind, not of body." When the shadow of the great white bear was seen moving on a nearby ridge, not three hundred yards distant, he merely adjusted his grip, set his jaw, and pressed on, his resolve a palpable, physical force against the Arctic night.</p>
-            <p>He delivered the geologist to the safety of the base camp shortly after midnight, his own strength seemingly undiminished, his bearing as composed as if he had returned from a brisk constitutional on Dulwich Common. The woman is expected to make a full recovery — a fact she owes entirely to the fortitude, the decisive action, and the singular, magnificent stubbornness of the man who refused to leave her to the ice.</p>
-            <p>It is a feat of which Shackleton himself would have been proud. The Professor, when questioned by this correspondent, was characteristically dismissive of his own heroism. "One does what is required," he stated, before turning his attention, with evident relief, to the next day's glacial survey.</p>
-          </section>
+                <p>The Professor's academic record is one of sustained and distinguished achievement. His work on sea-level change and glacial dynamics has been cited in parliamentary briefings, IPCC reports, and, on one notable occasion, a speech by the Secretary of State for the Environment, who, it must be noted, did not fully understand it but was nonetheless impressed by its length.</p>
 
-        </div>
+                <p>He has served as Vice-Chancellor of Durham University with the same methodical resolve he brings to an Arctic traverse: a clear objective, a reliable team, and an absolute refusal to acknowledge the possibility of failure. His colleagues describe him as "formidable." His students describe him as "the sort of man you would want beside you if things went badly wrong." Both assessments are, this paper believes, correct.</p>
 
-        <!-- RIGHT COLUMN P1 -->
-        <div class="col-right">
+                <hr class="col-divider">
 
-          <div class="clipping-wrap">
-            <div class="clipping-plate">
-              <div class="halftone-overlay"></div>
-              <img src="images/men_wanted.jpg" alt="Men Wanted for Hazardous Journey" class="clipping-img img-bw" />
-              <div class="torn-edge-overlay"></div>
+                <div class="weather-box">
+                    <h4>Meteorological Forecast</h4>
+                    <p>A bracing north-easterly is anticipated across the northern territories, with temperatures falling sharply after nightfall. Conditions in Spitsbergen remain, as ever, inhospitable to the faint of heart. The Dulwich Peninsula reports mild cloud with occasional intervals of unsolicited advice from elder siblings. Barometric pressure: resolute.</p>
+                </div>
+
+                <figure>
+                    <img src="images/simon_modern.png" alt="S. Long, Elder">
+                    <figcaption>FIG. II — S. Long, Elder. By Twenty Minutes.</figcaption>
+                </figure>
+
+                <div class="classified-box">
+                    <h4>Classified Notices</h4>
+                    <p><strong>The Certainty Company.</strong> Purveyors of Unwavering Conviction since 1966. Is your domestic enterprise beset by doubt? We supply premium-grade certainty for all applications. Sold by the tonne. Apply: Dept. of Geography, Durham.</p>
+                    <p><strong>For Sale: One Slightly Used Compass.</strong> Guaranteed to point North. No longer required by owner, who has internalised its function. Apply to the same address.</p>
+                    <p><strong>Wanted: Experienced Structural Surveyor.</strong> Must be comfortable with exposed beams, original stonework, and the occasional Viking-era drainage channel. Proximity to Thirsk, North Yorkshire, essential. Optimism an advantage.</p>
+                </div>
             </div>
-            <p class="fig-caption">An advertisement of the era, echoing the spirit of the age.</p>
-          </div>
 
-          <div class="column-rule" style="margin-top:10px;"></div>
+            <!-- CENTRE COLUMN -->
+            <div class="col">
+                <p class="section-rule">Leadership &amp; Doctrine</p>
 
-          <div class="secondary-portrait-wrap" style="margin-top: 8px;">
-            <div class="portrait-plate">
-              <div class="halftone-overlay"></div>
-              <img src="images/shackleton_standing_new.jpg" alt="FIG. II — Leader, A. Long, in Polar Attire" class="hero-portrait img-bw" />
-              <div class="torn-edge-overlay"></div>
-              <div class="portrait-vignette"></div>
+                <h3 class="article-title">On Leadership &amp; Moral Fortitude</h3>
+                <p class="byline">From a conversation with this paper's correspondent, recorded in the field.</p>
+
+                <p class="drop-cap">In a recent audience granted to this publication, Professor Antony Long offered his considered reflections upon a long and distinguished career in the service of knowledge, ice, and institutional governance. When pressed upon the essential quality of a leader, his reply was immediate and entirely unequivocal.</p>
+
+                <p>"Certainty," he stated. "In unstable climates — be they polar, political, or pertaining to domestic construction — the collective requires ballast. A leader does not merely indicate the way. He <em>is</em> the way. His own conviction is the fixed point upon which the entire enterprise turns. To waver is to invite chaos. To admit doubt is to concede defeat before the first step is taken."</p>
+
+                <div class="pull-quote">"The ice does not negotiate. The wind does not seek consensus. Nature presents a series of unambiguous facts."</div>
+
+                <p>The Professor's doctrine — which this paper has chosen to term <em>The Long Doctrine</em> — is one of uncompromising self-reliance. It holds that the correct course of action is always knowable, provided one has sufficient data and the moral courage to interpret it correctly. It is a philosophy forged in the unforgiving clarity of the high Arctic, where ambiguity is a luxury one cannot afford.</p>
+
+                <p>"The ice does not negotiate," the Professor explained, gesturing towards the glacial moraine that served as his temporary office. "The wind does not seek consensus. Nature presents a series of unambiguous facts. It is our task to respond with equal clarity. To do otherwise is to indulge in a form of intellectual vanity that has no place in a serious undertaking."</p>
+
+                <figure>
+                    <img src="images/hurley_crushed.jpg" alt="The Endurance crushed by ice, 1915">
+                    <figcaption>The Endurance, crushed by pack ice, 1915. The Professor considers this a useful case study in contingency planning.</figcaption>
+                </figure>
+
+                <p>When asked whether he had ever been wrong, the Professor paused for what this correspondent estimated to be approximately four seconds — an eternity, by his standards — before replying: "I have occasionally been premature." It is, this paper submits, as close to a concession as the man is constitutionally capable of making.</p>
+
+                <p>The Long Doctrine has been applied, with varying degrees of success, to the governance of a major British university, the renovation of a substantial property near Thirsk, North Yorkshire, and the management of a research team in conditions of extreme cold. In each case, the results have been, at minimum, impressive. In the case of Spitsbergen, they have been, as the following account demonstrates, rather more than that.</p>
+
+                <hr class="col-divider">
+
+                <p class="section-rule">A Rescue of Uncommon Fortitude</p>
+                <p class="byline">From our Spitsbergen Correspondent, dispatched under conditions of some urgency.</p>
+
+                <p class="drop-cap">Word has reached this paper of a recent incident in the Svalbard archipelago which demonstrates, in the most unambiguous terms, the calibre of men produced by Dulwich College. Professor Antony Long, engaged in glacial research near Ny-Ålesund, was leading a small party across heavily crevassed ice-field when disaster struck with the sudden, indifferent brutality characteristic of the Arctic.</p>
+
+                <p>A junior colleague — a promising geologist from a lesser institution — lost her footing upon a deceptive snow bridge and plunged into the abyss below. Her fall was arrested some forty feet beneath the surface, but the impact resulted in a severely sprained ankle, rendering her entirely unable to walk. Her cries, though muffled by the ice, alerted the Professor, who, without a moment's deliberation, organised the rescue with the calm authority of a man who has never once entertained the possibility of failure.</p>
             </div>
-            <p class="fig-caption">FIG. II — Leader, A. Long, in Polar Attire</p>
-          </div>
 
-          <div class="column-rule" style="margin-top:10px;"></div>
+            <!-- RIGHT COLUMN -->
+            <div class="col">
+                <p class="section-rule">The Spitsbergen Dispatch</p>
 
-          <div class="image-box">
-            <img src="images/hurley_james_caird.jpg" alt="The James Caird lifeboat." class="img-bw" />
-            <p class="fig-caption">The James Caird, the 22.5-foot lifeboat in which Shackleton and five companions made the 800-mile journey from Elephant Island to South Georgia. A feat of navigation and endurance without parallel.</p>
-          </div>
+                <figure>
+                    <img src="images/antony_standing.png" alt="Professor Long in the field">
+                    <figcaption>FIG. III — The Professor, in characteristic field attire.</figcaption>
+                </figure>
 
-          <div class="column-rule" style="margin-top:10px;"></div>
+                <p>While others debated the safest course of action, Professor Long had already established a secure anchor and was abseiling into the chasm. He found the injured party in a state of considerable distress, her ankle swelling at an alarming rate and her body temperature falling. With the calm authority for which he is known, he administered immediate first aid, speaking to her throughout in the measured, unhurried tones of a man for whom crisis is merely another form of weather.</p>
 
-          <div class="image-box">
-            <img src="images/hurley_dinner.jpg" alt="Dinner aboard the Endurance." class="img-bw" />
-            <p class="fig-caption">Dinner aboard the Endurance: the importance of maintaining civilised standards in hostile conditions.</p>
-          </div>
+                <p>The extrication was a masterpiece of improvised engineering. Yet the true test was to come. With the injured geologist unable to walk, and the party's base camp a gruelling eight miles distant across terrain of the most hostile description — fractured ice, wind-scoured ridges, and the gathering dark of an Arctic evening — the situation appeared, to the uninitiated, desperate.</p>
 
-          <div class="column-rule"></div>
+                <p>Temperatures were plummeting towards minus twenty. The unmistakable tracks of a large male polar bear had been sighted only that morning, circling the camp with the unhurried confidence of a creature that has never been told it cannot do something.</p>
 
-          <section class="article-section">
-            <h3 class="section-head">On the Question of Retirement</h3>
-            <p>This paper has been asked, by several correspondents, to address the question of whether Professor Long intends, at sixty, to reduce the tempo of his activities. We have put this question to the Professor directly. His response — a single raised eyebrow, followed by a silence of approximately four seconds, followed by a return to his work — we take as definitive. The question will not be raised again.</p>
-            <p>For the record, the Professor's current portfolio includes: one ongoing glacial research programme, one ambitious domestic construction project in its fourth year, one Vice Chancellorship, and one sixtieth birthday. He considers none of these to be grounds for deceleration. We concur.</p>
-          </section>
+                <div class="pull-quote">"Fatigue is a state of mind, not of body."</div>
 
-          <div class="column-rule"></div>
+                <p>Professor Long, dismissing all counsel of caution with a brevity that brooked no further discussion, hoisted the injured woman onto his back and began the march. For six hours — six hours of unrelenting, lung-burning, muscle-destroying effort — he carried his charge through the gathering gloom and the biting wind, his pace scarcely slackening, his direction never wavering.</p>
 
-          <section class="article-section">
-            <h3 class="section-head">Ten Things You Did Not Know About Spitsbergen</h3>
-            <p class="article-byline">Compiled by Our Correspondent in the High Arctic</p>
-            <p><strong>I.</strong> Spitsbergen — the largest island of the Svalbard archipelago — takes its name from the Dutch <em>spitse bergen</em>, meaning "pointed mountains." It was sighted by Willem Barentsz in 1596, who was, at the time, looking for something else entirely. This is how most great discoveries are made.</p>
-            <p><strong>II.</strong> The archipelago sits at 78° North — closer to the North Pole than to Oslo. In high summer, the sun does not set for four consecutive months. In winter, it does not rise for the same period. The polar bear, who lives here year-round, appears entirely unbothered by either arrangement.</p>
-            <p><strong>III.</strong> There are more polar bears on Svalbard than there are permanent human residents. The bears are not required to carry documentation. The humans are required to carry rifles. This arrangement is considered satisfactory by all parties except, occasionally, the humans.</p>
-            <p><strong>IV.</strong> The permafrost of Spitsbergen preserves organic material with extraordinary fidelity. Bodies buried in the local cemetery in the early twentieth century remain, to this day, in a condition that forensic scientists describe as "remarkable." The Gazette considers this a cautionary note on the wisdom of settling permanently in the High Arctic.</p>
-            <p><strong>V.</strong> The Svalbard Global Seed Vault — opened in 2008 — is buried 120 metres inside a sandstone mountain near Longyearbyen. It contains over 1.3 million seed varieties from every nation on earth. It is, in effect, a backup copy of agriculture. The permafrost serves as the refrigerator. Professor Long has inspected the permafrost. He considers it adequate.</p>
-            <p><strong>VI.</strong> Crevasses on Spitsbergen's glaciers are formed by the differential movement of ice over uneven bedrock. They are invisible under fresh snow, may be several metres wide, and can be thirty metres deep. They are, in short, exactly as dangerous as they sound. The Professor has navigated them on multiple occasions. He considers them a navigational inconvenience.</p>
-            <p><strong>VII.</strong> The Russian settlement of Barentsburg on Spitsbergen has operated continuously since 1931, mining coal that is no longer economically viable to extract, in a location that is extraordinarily expensive to supply, for reasons that remain, to outside observers, somewhat opaque. It has a hotel, a cultural centre, and a statue of Lenin. The statue appears entirely comfortable with the climate.</p>
-            <p><strong>VIII.</strong> In 1773, the young Horatio Nelson — then aged fourteen and serving as a midshipman — attempted to capture a polar bear on the Svalbard ice for its pelt. He was repelled. He went on to win the Battle of Trafalgar. The polar bear went on to continue being a polar bear. Both outcomes are considered satisfactory.</p>
-            <p><strong>IX.</strong> The midnight sun of Spitsbergen disorients the human circadian rhythm within approximately three days. Experienced expeditioners compensate with strict sleep schedules, blackout curtains, and an iron determination not to acknowledge what time it is. Professor Long compensates by continuing to work regardless. His circadian rhythm has reportedly ceased to object.</p>
-            <p><strong>X.</strong> Spitsbergen has no indigenous human population. Every person on the island arrived from somewhere else, for a purpose, and with a plan. This, the Gazette submits, is the correct approach to most things.</p>
-          </section>
+                <p>When members of his party spoke of fatigue, he reminded them that "fatigue is a state of mind, not of body." When the shadow of the great white bear was seen moving on a nearby ridge, not three hundred yards distant, he merely adjusted his grip, set his jaw, and pressed on, his resolve a palpable, physical force against the Arctic night.</p>
 
+                <p>He delivered the geologist to the safety of the base camp shortly after midnight, his own strength seemingly undiminished, his bearing as composed as if he had returned from a brisk constitutional on Dulwich Common. The woman is expected to make a full recovery — a fact she owes entirely to the fortitude, the decisive action, and the singular, magnificent stubbornness of the man who refused to leave her to the ice.</p>
+
+                <p>It is a feat of which Shackleton himself would have been proud. The Professor, when questioned by this correspondent, was characteristically dismissive of his own heroism. "One does what is required," he stated, before turning his attention, with evident relief, to the next day's glacial survey.</p>
+
+                <hr class="col-divider">
+
+                <div class="facts-box">
+                    <h4>Ten Things You Did Not Know About Spitsbergen</h4>
+                    <ol>
+                        <li>There are more polar bears on Spitsbergen (approximately 3,000) than human residents (approximately 2,700). The bears have not been informed that they are outnumbered.</li>
+                        <li>The Svalbard Global Seed Vault, buried in the permafrost, contains over 1.3 million seed varieties. It is, in essence, a very cold library for the end of the world.</li>
+                        <li>The young Horatio Nelson was repelled from Spitsbergen by a polar bear in 1773. He was fourteen. The bear was unimpressed.</li>
+                        <li>The midnight sun lasts from April to August. The polar night lasts from October to February. There is no twilight. The Arctic does not do things by halves.</li>
+                        <li>Spitsbergen is governed by the Svalbard Treaty of 1920, which grants citizens of 46 nations the right to live and work there. It is, constitutionally speaking, the world's most cosmopolitan wilderness.</li>
+                        <li>The permafrost is melting at a rate that alarms glaciologists. Professor Long is among those who have been alarmed by it, professionally, for several decades.</li>
+                        <li>The Russian settlement of Barentsburg maintains a swimming pool, a cultural centre, and a bust of Lenin. It is, by some margin, the most incongruous thing in the Arctic.</li>
+                        <li>The word "Svalbard" means "cold coasts" in Old Norse. This is, for once, an entirely accurate place name.</li>
+                        <li>Dogs must be kept on a lead outside the settlements, to prevent them from disturbing the polar bears. The bears are not subject to a reciprocal arrangement.</li>
+                        <li>Every person on Spitsbergen arrived from somewhere else, for a purpose, and with a plan. This, the Gazette submits, is the correct approach to most things.</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div><!-- end col-grid -->
+
+        <div class="page-footer">
+            Page the First &nbsp;⬥&nbsp; The Dulwich Gazette &nbsp;⬥&nbsp; March 3rd, 1914 (Also 2026) &nbsp;⬥&nbsp; Dulwich College, Founded 1619
         </div>
-      </div><!-- /content-grid p1 -->
-
-      <footer class="gazette-footer">
-        <div class="footer-rule"></div>
-        <p class="footer-text">PAGE THE FIRST &nbsp;—&nbsp; ESTABLISHED 1966 &nbsp;—&nbsp; OLD ALLEYN'S · DULWICH COLLEGE · FOUNDED 1619</p>
-        <div class="footer-rule"></div>
-      </footer>
-
-    </div><!-- /page-1 -->
-
-    <!-- PAGE BREAK -->
-    <div class="page-break-divider">
-      <div class="page-break-rule"></div>
-      <span class="page-break-ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
-      <div class="page-break-rule"></div>
     </div>
 
-    <!-- ══════════════════════════════════════════════════════════════ -->
-    <!-- PAGE 2 -->
-    <!-- ══════════════════════════════════════════════════════════════ -->
-    <div class="gazette-page" id="page-2">
+    <!-- ═══════════════════════════════════════════════════
+         PAGE 2 — CORRESPONDENCE & RECORD
+         ═══════════════════════════════════════════════════ -->
+    <div class="gazette-page" id="page2">
 
-      <header class="masthead masthead-continuation">
-        <div class="masthead-rule top-rule"></div>
-        <div class="masthead-ornament-row">
-          <div class="masthead-crest left-crest">
-            <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img crest-bw" />
-          </div>
-          <div class="masthead-center">
-            <p class="gazette-kicker">IMPERIAL SOCIETY FOR NORTHERN RESOLVE &nbsp;·&nbsp; DULWICH DIVISION &nbsp;·&nbsp; EST. 1966</p>
-            <h1 class="gazette-title">The Dulwich Gazette</h1>
-            <p class="gazette-subtitle">SPECIAL POLAR &amp; DOMESTIC ENTERPRISE EDITION &nbsp;·&nbsp; PAGE THE SECOND</p>
-          </div>
-          <div class="masthead-crest right-crest">
-            <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img crest-bw" />
-          </div>
-        </div>
-        <div class="masthead-rule double-rule"></div>
-      </header>
-
-      <div class="content-grid">
-
-        <!-- LEFT COLUMN P2 -->
-        <div class="col-left">
-
-          <section class="article-section">
-            <h3 class="section-head">Correspondence</h3>
-            <p class="article-byline"><em>The following correspondence was received in response to our report, 'On Leadership &amp; Moral Fortitude,' published in this edition.</em></p>
-
-            <div class="letter-item">
-              <p class="letter-salutation">Sir,</p>
-              <p>I was most gratified to read the account of Professor Long's recent act of heroism in Spitsbergen. It is precisely the sort of decisive, self-reliant action one expects from a son of Dulwich. It confirms what many of us have long suspected: that the character of a man is forged not in the lecture hall, but on the ice-field.</p>
-              <p>The Professor is a credit to the College and to the Empire. That he should carry a stricken colleague eight miles through the Arctic dark, with a polar bear in attendance, and arrive at camp with his composure intact, speaks volumes. It speaks, in fact, an entire library.</p>
-              <p class="letter-sign">Yours, &amp;c.,<br/><strong>A Grateful Old Alleynian</strong><br/><em>Dulwich, S.E.21</em></p>
-            </div>
-
-            <div class="letter-divider">✦</div>
-
-            <div class="letter-item">
-              <p class="letter-salutation">Sir,</p>
-              <p>Regarding your Phrenological Analysis of Professor Long: while I concur with your assessment of his cranial indicators of Firmness and Individuality, you neglect to mention the pronounced development of the organ of Tune. The Professor, I am reliably informed, possesses a singing voice of considerable power and surprising melodic sweetness. It is a facet of his character that is too often overlooked in assessments of his more formidable qualities.</p>
-              <p class="letter-sign">Yours in Science,<br/><strong>A Student of Man</strong><br/><em>Durham University</em></p>
-            </div>
-
-            <div class="letter-divider">✦</div>
-
-            <div class="letter-item">
-              <p class="letter-salutation">Sir,</p>
-              <p>Your correspondent's account of the Spitsbergen rescue omits one detail of considerable significance: the Professor, upon reaching base camp, is reported to have immediately enquired about the state of the glacial data collected that day, before attending to his own considerable physical exhaustion. This, more than any feat of endurance, speaks to the true nature of the man. Science first. Comfort later. Possibly never.</p>
-              <p class="letter-sign">Yours faithfully,<br/><strong>A Fellow Glaciologist</strong><br/><em>The Scott Polar Research Institute, Cambridge</em></p>
-            </div>
-
-            <div class="letter-divider">✦</div>
-
-            <div class="letter-item">
-              <p class="letter-salutation">Sir,</p>
-              <p>I write to register a mild but firm objection to the characterisation of the Professor's domestic construction project as "ongoing." It is not ongoing. It is progressing. There is a distinction. Ongoing implies uncertainty of outcome. Progressing implies certainty of direction with a variable timeline. The Professor himself has made this distinction clear on numerous occasions. We trust this clarification will be reflected in future editions.</p>
-              <p class="letter-sign">Yours, with architectural optimism,<br/><strong>A Sympathetic Observer</strong><br/><em>Thirsk, North Yorkshire</em></p>
-            </div>
-
-          </section>
-
-          <div class="column-rule"></div>
-
-          <div class="image-box">
-            <img src="images/hurley_team.jpg" alt="The crew of the Endurance." class="img-bw" />
-            <p class="fig-caption">The crew of the Endurance. A study in resilience, camaraderie, and the wisdom of following a man who knows where he is going.</p>
-          </div>
-
+        <div class="page-masthead-small">
+            <h2>The Dulwich Gazette</h2>
+            <p class="page-meta">Page the Second &nbsp;⬥&nbsp; Correspondence, Record &amp; Commentary &nbsp;⬥&nbsp; March 3rd, 1914 (Also 2026)</p>
         </div>
 
-        <!-- CENTRE COLUMN P2 -->
-        <div class="col-centre">
+        <div class="col-grid">
 
-          <section class="article-section">
-            <h3 class="section-head">A Phrenological Analysis</h3>
-            <p class="article-byline"><em>By Our Resident Cranial Scientist, Dr. F. Bumps.</em></p>
-            <p>An examination of the provided portraits of Professor Long reveals a cranial structure of considerable interest to the student of character. The pronounced frontal bone suggests a highly developed faculty for Observation and Individuality — qualities amply confirmed by his published works and his conduct in the field. The breadth of the upper cranium indicates a powerful organ of Firmness, while the notable posterior development speaks to a profound sense of Inhabitiveness (love of home) and Philoprogenitiveness (love of offspring).</p>
-            <p>The region of Constructiveness is, as one might expect, exceptionally well-developed — a fact that goes some way to explaining both the glacial research and the domestic construction project. The organ of Approbativeness, by contrast, appears modest in proportion, suggesting a man who acts from inner conviction rather than the desire for external validation. He does not require your applause. He is already certain he is right.</p>
-            <p>Most telling, however, is the sheer, uncompromising solidity of the entire cranial structure. It is, in short, the head of a man accustomed to being right, and built to withstand the consequences. The skull, like the man, is built to last.</p>
-          </section>
+            <!-- LEFT COLUMN -->
+            <div class="col">
+                <p class="section-rule">Letters to the Editor</p>
 
-          <div class="column-rule"></div>
+                <p class="byline">The following correspondence was received in response to our report, <em>"On Leadership &amp; Moral Fortitude,"</em> published in this edition.</p>
 
-          <div class="image-box">
-            <img src="images/hurley_football.jpg" alt="A game of football on the ice." class="img-bw" />
-            <p class="fig-caption">A game of football on the ice: a moment of levity in the face of adversity. The Professor is believed to have won.</p>
-          </div>
+                <div class="letter">
+                    <h3 class="article-title" style="font-size:1.1rem;">On the Question of Certainty</h3>
+                    <p>Sir — Your correspondent's account of Professor Long's doctrine of certainty is, I am pleased to report, entirely accurate. I have had the privilege of working alongside the Professor for the better part of a decade, and I can confirm that his conviction is not merely a professional posture but a fundamental condition of his being. He does not, to my knowledge, own a book on the subject of doubt. I am not certain he is aware that such books exist. Yours faithfully,</p>
+                    <p class="letter-sig">— A Colleague, Durham University</p>
+                </div>
 
-          <div class="column-rule"></div>
+                <div class="letter">
+                    <h3 class="article-title" style="font-size:1.1rem;">A Dissenting View on Retirement</h3>
+                    <p>Sir — Your recent commentary on the question of retirement at sixty strikes this correspondent as premature in the extreme. The Professor, as those of us who have observed him closely will attest, shows no signs whatsoever of diminishing capacity. If anything, his certainty has increased with age, in the manner of a well-seasoned timber that becomes harder and more resistant to external pressure over time. The suggestion that sixty represents any kind of terminus is, frankly, absurd. I write as one who has watched him carry a grown woman eight miles across Arctic ice. The man is not retiring. He is merely warming up. Yours, with considerable vigour,</p>
+                    <p class="letter-sig">— A Sympathetic Observer, Thirsk, North Yorkshire</p>
+                </div>
 
-          <section class="article-section">
-            <h3 class="section-head">From the Archives: A Twin at Dulwich</h3>
-            <p class="article-byline"><em>From the Alleynian, Summer 1984.</em></p>
-            <p>"The Long twins, Antony and Simon, depart the College this term, leaving behind them a legacy of spirited debate and academic rigour. Antony, bound for Durham to read Geography, is remembered for his unshakeable confidence in matters of cartography and his profound belief in the civilising influence of isobars. Simon, destined for a career in the less precise world of commerce, is noted for his persistent questioning of established certainties.</p>
-            <p>"We wish them both well, and trust they will continue to provide each other with the necessary intellectual ballast. The College has produced many fine men. It has rarely produced two at once."</p>
-          </section>
+                <div class="letter">
+                    <h3 class="article-title" style="font-size:1.1rem;">On the Matter of the Twenty Minutes</h3>
+                    <p>Sir — It has come to my attention that certain parties — and I name no names, though I note that one of them is twenty minutes my senior and has been dining out on this fact since approximately 1966 — have taken to describing themselves as "the elder." I wish to place on record, for the benefit of posterity and the readership of this distinguished publication, that being born second is not a deficiency of ambition. It is, rather, evidence of a considered approach to entry. I arrived when I was ready. I have been ready ever since. Yours, with fraternal warmth and a certain competitive edge,</p>
+                    <p class="letter-sig">— Prof. A. Long, Spitsbergen (currently)</p>
+                </div>
 
-          <div class="column-rule"></div>
+                <div class="letter">
+                    <h3 class="article-title" style="font-size:1.1rem;">In Defence of the Renovation</h3>
+                    <p>Sir — Your classified notice seeking a structural surveyor for a property near Thirsk, North Yorkshire, has been noted with interest by the local building trade. We wish to assure the proprietor that the exposed beams, original stonework, and Viking-era drainage channel are not, as he has suggested, "challenges." They are, rather, features. We look forward to his continued custom. Yours, with professional optimism,</p>
+                    <p class="letter-sig">— The North Yorkshire Master Builders' Association</p>
+                </div>
 
-          <section class="article-section">
-            <h3 class="section-head">An Interview at Sixty</h3>
-            <p class="article-byline"><em>Our correspondent meets the Professor on the occasion of his sixtieth birthday.</em></p>
-            <p><strong>Q: What has sixty years taught you?</strong><br/>
-            "That the correct answer is usually the one that requires the most effort. And that a good map is worth more than a committee."</p>
-            <p><strong>Q: Any regrets?</strong><br/>
-            "None that I have had time to examine. I have been busy."</p>
-            <p><strong>Q: What advice would you give your younger self?</strong><br/>
-            "Start earlier. Pack more pemmican. Do not, under any circumstances, ask a builder for an estimated completion date."</p>
-            <p><strong>Q: And your twin?</strong><br/>
-            "Simon has been an invaluable source of alternative perspectives over the years. Most of them wrong, but delivered with such conviction that one is occasionally forced to reconsider. It is, I suppose, a form of quality control."</p>
-            <p><strong>Q: What next?</strong><br/>
-            "The ice awaits. It always does."</p>
-          </section>
+                <figure>
+                    <img src="images/hurley_team.jpg" alt="The Endurance crew">
+                    <figcaption>The crew of the Endurance, 1914. The Professor finds this photograph instructive.</figcaption>
+                </figure>
+            </div>
 
+            <!-- CENTRE COLUMN -->
+            <div class="col">
+                <p class="section-rule">Analytical Commentary</p>
+
+                <div class="phrenology-box">
+                    <h4>A Phrenological Analysis of the Subject</h4>
+                    <p>Our consulting phrenologist, Dr. Hieronymus Crumble (Dulwich, 1888), has examined the available photographic evidence and offers the following assessment. The cranial topography of Professor Long presents several features of note. The region associated with <em>Firmitas</em> (resolve) is, by any measure, exceptionally well-developed. The area governing <em>Certitudo</em> (certainty) is, frankly, remarkable. The zone of <em>Dubitatio</em> (doubt) appears, from the available evidence, to be vestigial at best. Dr. Crumble notes, with professional admiration, that he has not encountered a specimen of such pronounced intellectual architecture since his examination of the late Admiral Lord Fisher in 1901. He recommends the Professor for any enterprise requiring sustained conviction in the face of overwhelming evidence to the contrary.</p>
+                </div>
+
+                <figure>
+                    <img src="images/hurley_football.jpg" alt="Football on the ice">
+                    <figcaption>The Endurance crew at leisure, 1915. Morale was maintained by sport, ingenuity, and the Professor's general demeanour.</figcaption>
+                </figure>
+
+                <hr class="col-divider">
+
+                <p class="section-rule">Archive Extract</p>
+                <h3 class="article-title">The Twin at Dulwich: A Historical Note</h3>
+                <p class="byline">From the College Register, 1966–1984.</p>
+
+                <p class="drop-cap">The Long twins entered Dulwich College in the autumn of 1977, distinguishable, according to the admissions register, by "a difference in bearing that is difficult to articulate but immediately apparent." The elder, it was noted, arrived first and appeared to consider this a permanent advantage. The younger arrived twenty minutes later, assessed the situation, and immediately set about rectifying the deficit by other means.</p>
+
+                <p>Both boys excelled in the sciences. Both displayed what the then-headmaster described as "a commendable refusal to accept the limitations of the available evidence." Both went on to distinguished careers. The elder chose commerce and sport. The younger chose ice. The Gazette considers both choices defensible, though it notes that one of them has resulted in a considerably warmer office.</p>
+
+                <hr class="col-divider">
+
+                <p class="section-rule">An Interview at Sixty</p>
+                <p class="byline">Our correspondent put several questions to the Professor on the occasion of his birthday.</p>
+
+                <p class="interview-q">Q: What does sixty feel like?</p>
+                <p class="interview-a">"Much like fifty-nine, but with a greater sense of vindication."</p>
+
+                <p class="interview-q">Q: What is your greatest achievement?</p>
+                <p class="interview-a">"Surviving the 1998 Greenland traverse with my equipment, my team, and my certainty entirely intact."</p>
+
+                <p class="interview-q">Q: And your greatest regret?</p>
+                <p class="interview-a">A pause of approximately three seconds. "I once conceded a point in a faculty meeting. I have not repeated the error."</p>
+
+                <p class="interview-q">Q: What advice would you give your younger self?</p>
+                <p class="interview-a">"Go north sooner. The ice is more honest than most people."</p>
+
+                <p class="interview-q">Q: And to your twin?</p>
+                <p class="interview-a">A longer pause. Then, with evident warmth: "He already knows everything I would tell him. He always has. That is, simultaneously, his most admirable quality and his most infuriating one."</p>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="col">
+                <p class="section-rule">The Expeditionary Record</p>
+
+                <figure>
+                    <img src="images/hurley_dogs.jpg" alt="Dog walking on the ice">
+                    <figcaption>Exercising the dogs on the Weddell Sea ice, 1915. Discipline maintained throughout.</figcaption>
+                </figure>
+
+                <p class="byline">A chronological record of the principal theatres of operation of Professor A. Long, compiled by the Gazette's archival correspondent.</p>
+
+                <table class="gazette-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Theatre</th>
+                            <th>Outcome</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1966</td><td>Dulwich, SE21</td><td>Arrival. Conditions assessed.</td></tr>
+                        <tr><td>1977</td><td>Dulwich College</td><td>Enrolled. Immediate distinction.</td></tr>
+                        <tr><td>1984</td><td>University</td><td>Sciences. First class.</td></tr>
+                        <tr><td>1989</td><td>Greenland</td><td>First Arctic expedition. Returned.</td></tr>
+                        <tr><td>1994</td><td>Spitsbergen</td><td>Glacial survey. Conditions hostile.</td></tr>
+                        <tr><td>1998</td><td>Greenland</td><td>Major traverse. All objectives met.</td></tr>
+                        <tr><td>2003</td><td>Antarctica</td><td>Sea-level research. Landmark findings.</td></tr>
+                        <tr><td>2008</td><td>Durham</td><td>Chair of Geography. Assumed command.</td></tr>
+                        <tr><td>2014</td><td>Svalbard</td><td>Rescue of colleague. See p.1.</td></tr>
+                        <tr><td>2018</td><td>Durham</td><td>Vice-Chancellor. Steady hand.</td></tr>
+                        <tr><td>2022</td><td>Thirsk, N. Yorks</td><td>Renovation commenced. Ongoing.</td></tr>
+                        <tr><td>2026</td><td>Sixtieth Year</td><td>Commenced. Prospects: excellent.</td></tr>
+                    </tbody>
+                </table>
+
+                <hr class="col-divider">
+
+                <div class="conditions-box">
+                    <h4>Polar Conditions Report</h4>
+                    <p><strong>Spitsbergen (Ny-Ålesund):</strong> Temp. −18°C. Wind: NNE, 35 knots. Visibility: poor. Polar bear activity: elevated. Recommended equipment: crampons, ice axe, and the conviction of a man who has done this before. Professor Long's assessment: "Bracing."</p>
+                    <p><strong>Greenland (Summit Station):</strong> Temp. −32°C. Wind: calm. Ice sheet: stable. Research conditions: optimal. The Professor's preferred climate.</p>
+                    <p><strong>Thirsk, North Yorkshire:</strong> Temp. 4°C. Wind: W, 12 knots. Structural survey: ongoing. Viking drainage: active. Outlook: cautiously optimistic.</p>
+                </div>
+
+                <figure>
+                    <img src="images/hurley_puppies.jpg" alt="Puppies on the Endurance">
+                    <figcaption>The Endurance's puppies, 1915. Even in extremis, morale must be maintained.</figcaption>
+                </figure>
+            </div>
+
+        </div><!-- end col-grid -->
+
+        <div class="page-footer">
+            Page the Second &nbsp;⬥&nbsp; The Dulwich Gazette &nbsp;⬥&nbsp; March 3rd, 1914 (Also 2026) &nbsp;⬥&nbsp; Dulwich College, Founded 1619
         </div>
-
-        <!-- RIGHT COLUMN P2 -->
-        <div class="col-right">
-
-          <div class="image-box">
-            <img src="images/hurley_dogs.jpg" alt="Walking the dogs on the ice." class="img-bw" />
-            <p class="fig-caption">Walking the dogs on the ice: a daily routine on the Endurance, and a reminder that even in extremis, routine is the foundation of sanity.</p>
-          </div>
-
-          <div class="column-rule"></div>
-
-          <section class="article-section">
-            <h3 class="section-head">Expeditionary Record of Professor A. Long</h3>
-            <table class="record-table">
-              <thead>
-                <tr>
-                  <th>Year</th>
-                  <th>Theatre</th>
-                  <th>Conditions</th>
-                  <th>Outcome</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>1966</td><td>Dulwich, S.E.21</td><td>Competitive. Twin present.</td><td>Survived. Walked independently.</td></tr>
-                <tr><td>1984</td><td>Durham University</td><td>Academic. Rigorous.</td><td>Graduated with distinction.</td></tr>
-                <tr><td>1990s</td><td>Greenland Ice Sheet</td><td>Sub-zero. Unforgiving. Magnificent.</td><td>Returned. Compass intact.</td></tr>
-                <tr><td>2000s</td><td>Spitsbergen</td><td>Arctic. Crevassed. Bear-patrolled.</td><td>Returned. Colleague rescued. Opinions reinforced.</td></tr>
-                <tr><td>2010</td><td>Durham (Senior)</td><td>Institutional. Committee-heavy.</td><td>Vice Chancellor. Calm maintained.</td></tr>
-                <tr><td>2024</td><td>Grand Designs, Domestic</td><td>Ambitious. Budgetary squalls.</td><td>Ongoing. Optimism undiminished.</td></tr>
-                <tr><td>2026</td><td>His Sixtieth Year</td><td>Celebratory. Twin watching.</td><td>Distinguished. The expedition continues.</td></tr>
-              </tbody>
-            </table>
-          </section>
-
-          <div class="column-rule"></div>
-
-          <div class="image-box">
-            <img src="images/hurley_puppies.jpg" alt="Puppies on the Endurance." class="img-bw" />
-            <p class="fig-caption">New life on the Endurance: puppies born during the expedition. The Professor is known to have a similar effect on departmental morale.</p>
-          </div>
-
-          <div class="column-rule"></div>
-
-          <section class="article-section">
-            <h3 class="section-head">Polar Conditions Report</h3>
-            <p class="article-byline"><em>Filed by our Meteorological Correspondent, Svalbard Station.</em></p>
-            <p>Conditions in the Svalbard archipelago remain, as ever, uncompromising. Temperatures at the Ny-Ålesund research station have recorded a seasonal low of minus twenty-three degrees Celsius, with wind chill factors rendering exposed skin vulnerable within minutes. Visibility on the glacier has been reduced to approximately fifty metres by drifting snow.</p>
-            <p>In these conditions, the Dulwich College Polar Society's most distinguished active member has been observed conducting fieldwork with his customary composure, pausing only to correct the compass bearing of a junior colleague and to note, with evident satisfaction, that the ice core data confirms his earlier hypothesis.</p>
-            <p>Forecast for the coming decade: continued determination, with occasional periods of domestic construction. No sign of abatement.</p>
-          </section>
-
-        </div>
-      </div><!-- /content-grid p2 -->
-
-      <footer class="gazette-footer">
-        <div class="footer-rule"></div>
-        <p class="footer-text">PAGE THE SECOND &nbsp;—&nbsp; ESTABLISHED 1966 &nbsp;—&nbsp; OLD ALLEYN'S · DULWICH COLLEGE · FOUNDED 1619</p>
-        <div class="footer-rule"></div>
-      </footer>
-
-    </div><!-- /page-2 -->
-
-    <!-- PAGE BREAK -->
-    <div class="page-break-divider">
-      <div class="page-break-rule"></div>
-      <span class="page-break-ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
-      <div class="page-break-rule"></div>
     </div>
 
-    <!-- ══════════════════════════════════════════════════════════════ -->
-    <!-- PAGE 3 -->
-    <!-- ══════════════════════════════════════════════════════════════ -->
-    <div class="gazette-page" id="page-3">
+    <!-- ═══════════════════════════════════════════════════
+         PAGE 3 — FINAL SHEET
+         ═══════════════════════════════════════════════════ -->
+    <div class="gazette-page" id="page3">
 
-      <header class="masthead masthead-continuation">
-        <div class="masthead-rule top-rule"></div>
-        <div class="masthead-ornament-row">
-          <div class="masthead-crest left-crest">
-            <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img crest-bw" />
-          </div>
-          <div class="masthead-center">
-            <p class="gazette-kicker">IMPERIAL SOCIETY FOR NORTHERN RESOLVE &nbsp;·&nbsp; DULWICH DIVISION &nbsp;·&nbsp; EST. 1966</p>
-            <h1 class="gazette-title">The Dulwich Gazette</h1>
-            <p class="gazette-subtitle">SPECIAL POLAR &amp; DOMESTIC ENTERPRISE EDITION &nbsp;·&nbsp; PAGE THE THIRD</p>
-          </div>
-          <div class="masthead-crest right-crest">
-            <img src="images/dulwich_crest.jpg" alt="Dulwich College Crest" class="crest-img crest-bw" />
-          </div>
-        </div>
-        <div class="masthead-rule double-rule"></div>
-      </header>
-
-      <div class="content-grid">
-
-        <!-- LEFT COLUMN P3 -->
-        <div class="col-left">
-
-          <div class="image-box">
-            <img src="images/hurley_james_caird.jpg" alt="The James Caird." class="img-bw" />
-            <p class="fig-caption">The James Caird, the small boat that carried Shackleton and five others across 800 miles of the Southern Ocean. A lesson in what is possible when retreat is not an option.</p>
-          </div>
-
-          <div class="column-rule"></div>
-
-          <section class="article-section">
-            <h3 class="section-head">The Gentleman's Wardrobe: A Study in Polar &amp; Academic Attire</h3>
-            <p class="article-byline"><em>By Our Fashion Correspondent, Miss A. Elegance.</em></p>
-            <p>It is a truth universally acknowledged that a man of substance must be in want of a suitable wardrobe. Professor Long's attire, as documented over the decades, provides a masterclass in dressing for the occasion, be it a glacial traverse or a faculty meeting.</p>
-            <p><strong>The Woollen Cap.</strong> The Professor's preference for a robust, hand-knitted woollen cap is well-documented. It is a practical, no-nonsense item, yet the jaunty angle at which it is often worn hints at a certain creative flourish. It speaks of a man who is serious, but not opposed to a touch of panache. The cap says: I am here, I am warm, and I know exactly where I am going.</p>
-            <p><strong>The Turtleneck Sweater.</strong> A staple of the intellectual and the man of action alike. The Professor's choice of a dark, tightly-knitted turtleneck projects an aura of academic rigour and physical readiness in equal measure. It is the garment of a man who is prepared for both a seminar on post-glacial rebound and a sudden drop in temperature. The turtleneck says: I have read the literature, and I am also prepared for the weather.</p>
-            <p><strong>The Expedition Anorak.</strong> In the field, the Professor favours function over frivolity. His fur-lined anorak, a garment of formidable proportions, is a testament to his understanding of the Arctic environment. It is a piece of equipment, not a fashion statement. And yet, in its sheer, uncompromising utility, it achieves a certain rugged grandeur that no tailor could contrive. The anorak says: I am going in. Do not follow unless you are certain.</p>
-            <p><strong>The Academic Gown.</strong> In the halls of Durham, the anorak is replaced by the academic gown. Yet the principle remains the same: the garment is a symbol of authority and a tool for the task at hand. The Professor wears his gown not as a costume, but as a uniform — a visible manifestation of his intellectual rank and purpose. The gown says: I have earned this. Now let us proceed.</p>
-            <p>In conclusion, the wardrobe of Professor Long is a reflection of the man himself: practical, purposeful, and possessed of a certain timeless style. It is the attire of a man who knows who he is, and who dresses accordingly. We commend it to the attention of all aspiring explorers, academics, and builders of ambitious domestic structures.</p>
-          </section>
-
-          <div class="column-rule"></div>
-
-          <div class="image-box">
-            <img src="images/hurley_ropes.jpg" alt="Navigating by ropes on the Endurance." class="img-bw" />
-            <p class="fig-caption">Using ropes to navigate the ice: the original safety system, requiring both physical courage and a sound knowledge of knots.</p>
-          </div>
-
-          <div class="column-rule"></div>
-
-          <section class="article-section">
-            <h3 class="section-head">An Ode to the Expedition Leader</h3>
-            <p class="article-byline"><em>Composed in the field by an anonymous admirer, believed to be a junior geologist.</em></p>
-            <p style="font-style:italic; line-height:1.8;">
-              He does not ask the ice for its opinion,<br/>
-              Nor seek the wind's consent before he moves.<br/>
-              He carries what is needed — man or mission —<br/>
-              And finds, in frozen ground, the path that proves.<br/><br/>
-              At sixty, still the compass points him northward,<br/>
-              The crevasse merely pauses, does not stop.<br/>
-              The bear retreats. The glacier yields its record.<br/>
-              The man continues. He has never dropped.
-            </p>
-          </section>
-
+        <div class="page-masthead-small">
+            <h2>The Dulwich Gazette</h2>
+            <p class="page-meta">Page the Third &amp; Final &nbsp;⬥&nbsp; Arts, Sciences &amp; Miscellany &nbsp;⬥&nbsp; March 3rd, 1914 (Also 2026)</p>
         </div>
 
-        <!-- CENTRE COLUMN P3 -->
-        <div class="col-centre">
+        <div class="col-grid">
 
-          <div class="image-box">
-            <img src="images/hurley_elephant_island.jpg" alt="Elephant Island." class="img-bw" />
-            <p class="fig-caption">The camp on Elephant Island, where the majority of the crew waited for rescue. Patience, in extremis, is itself a form of courage.</p>
-          </div>
+            <!-- LEFT COLUMN -->
+            <div class="col">
+                <p class="section-rule">The Gentleman's Wardrobe</p>
 
-          <div class="column-rule"></div>
+                <h3 class="article-title">A Guide to Polar Field Dress for the Discerning Academic</h3>
+                <p class="byline">By our Correspondent in Matters of Expeditionary Attire.</p>
 
-          <section class="article-section">
-            <h3 class="section-head">A Brief History of the Dulwich College Polar Society</h3>
-            <p class="article-byline"><em>Founded 1966. Membership: Two. Ambitions: Unlimited.</em></p>
-            <p>The Dulwich College Polar Society was established, informally, in the autumn of 1966, when two brothers of the Long family — one elder, one younger, separated by the slenderest of margins — first encountered the works of Ernest Shackleton in the College library. The elder, Simon, was immediately struck by the quality of the prose. The younger, Antony, was immediately struck by the quality of the leadership.</p>
-            <p>From this divergence of emphasis, a lifelong dynamic was established. Simon would provide the narrative; Antony would provide the direction. Simon would question the plan; Antony would implement it. Simon would note the polar bear; Antony would walk past it.</p>
-            <p>The Society has no formal constitution, no elected officers, and no membership fees. It has, however, produced one Vice Chancellor, one Partnerships Lead, one Greenland expedition, one Spitsbergen rescue, and one ambitious domestic construction project. It is, by any measure, a successful institution.</p>
-            <p>The Society meets annually, on the third of March, to mark the birthday of its younger — and, it must be said, more distinguished — member. Proceedings consist of a review of the year's expeditions, a brief argument about seniority, and the consumption of a quantity of tea sufficient to sustain a polar crossing.</p>
-            <p>The Society looks forward to its sixtieth year of operations with the same confidence and purpose that has characterised all its previous endeavours. The ice, as ever, awaits.</p>
-          </section>
+                <p class="drop-cap">The question of what to wear in the field is one that separates the genuine explorer from the merely enthusiastic amateur. Professor Long, who has spent the better part of four decades perfecting his approach to the matter, offers, by example, an instructive model.</p>
 
-          <div class="column-rule"></div>
+                <div class="wardrobe-box">
+                    <h4>The Long Field Wardrobe, Annotated</h4>
+                    <div class="wardrobe-item"><strong>The Turtleneck Sweater.</strong> Merino wool, dark. Worn with the collar at full height, conveying both warmth and an air of considered authority. Not to be confused with a fashion choice. It is a structural decision.</div>
+                    <div class="wardrobe-item"><strong>The Expedition Anorak.</strong> Hooded, windproof, in a colour that does not show ice. The hood is worn up in all conditions. This is not vanity. It is thermodynamics.</div>
+                    <div class="wardrobe-item"><strong>The Fur-Lined Outer Layer.</strong> Reserved for temperatures below −20°C, or for occasions when one wishes to make a point about the seriousness of the enterprise. Worn with the collar turned up. Always.</div>
+                    <div class="wardrobe-item"><strong>The Woolly Hat.</strong> Worn in all non-formal contexts. The Professor's preference is for a dark, close-fitting design that does not impede peripheral vision. Peripheral vision is important when polar bears are present.</div>
+                    <div class="wardrobe-item"><strong>The Boots.</strong> Insulated to −40°C. The Professor considers anything less to be optimistic to the point of recklessness.</div>
+                </div>
 
-          <div class="image-box">
-            <img src="images/shackleton_letter.jpg" alt="A handwritten letter from Shackleton." class="img-bw" />
-            <p class="fig-caption">A handwritten letter from Shackleton, a testament to the man's character. The Professor's own correspondence is noted for a similar quality of directness.</p>
-          </div>
+                <figure>
+                    <img src="images/hurley_ropes.jpg" alt="Navigating with ropes">
+                    <figcaption>Navigating the ice-field with ropes, 1915. Technique is everything.</figcaption>
+                </figure>
 
-          <div class="column-rule"></div>
+                <hr class="col-divider">
 
-          <section class="article-section">
-            <h3 class="section-head">On the Matter of the Grand Design</h3>
-            <p class="article-byline"><em>A Note from the Domestic Correspondent.</em></p>
-            <p>This paper has followed, with considerable interest, the progress of Professor Long's domestic construction project — a venture of such scope and ambition that it has, over the course of several years, become something of a legend in the vicinity of Thirsk, North Yorkshire. The project, which began as a modest renovation and has since expanded, in the manner of all great expeditions, well beyond its original brief, is understood to be approaching completion.</p>
-            <p>The Professor has approached this enterprise with the same methodical determination that has characterised his polar work. When builders have faltered, he has persevered. When budgets have been tested, he has recalibrated. When the planning committee has expressed reservations, he has expressed, with equal clarity, his own position. The planning committee has, in due course, come round.</p>
-            <p>This paper understands that the completed structure will be a thing of considerable beauty — a fitting monument to the conviction that the correct vision, pursued with sufficient tenacity, will ultimately prevail over all material obstacles. We look forward to the opening ceremony, at which attendance will, we are confident, be both distinguished and warmly dressed.</p>
-          </section>
+                <p class="section-rule">On the Question of Retirement</p>
 
-          <div class="column-rule"></div>
+                <p>The Gazette has been asked, by several correspondents, to address the question of whether Professor Long intends to retire upon reaching sixty. The answer, we are reliably informed, is no. The Professor considers retirement to be a concept applicable to equipment that has worn out, not to individuals who have merely accumulated experience. He has plans. They involve ice. The Gazette wishes him well and will report on developments as they occur.</p>
 
-          <section class="article-section">
-            <h3 class="section-head">Shackleton &amp; Long: A Comparative Study</h3>
-            <p class="article-byline"><em>By Our Historical Correspondent.</em></p>
-            <p>The parallels between Sir Ernest Shackleton and Professor Antony Long are, this paper submits, too numerous and too precise to be attributed to mere coincidence. Both are products of Dulwich College. Both have demonstrated, in the most unambiguous terms, that the Arctic is not a place to be feared but a place to be understood. Both have led expeditions of considerable ambition. Both have, at critical moments, carried their colleagues — literally or figuratively — to safety.</p>
-            <p>There are, of course, differences. Shackleton had the <em>Endurance</em>; Long has the Grand Design. Shackleton faced the Weddell Sea; Long faces the planning committee. Shackleton's ship was crushed by ice; Long's budget has been tested by builders. In each case, the response has been the same: adjust the coordinates, maintain the vision, and press on.</p>
-            <p>It is, perhaps, the most fitting tribute to the College that it has produced, in the space of a century, two men of such similar calibre. The first gave his name to an era of exploration. The second has given his name to a doctrine of leadership that will, this paper is confident, prove equally enduring.</p>
-          </section>
+                <p>It is worth noting, in this context, that Ernest Shackleton was planning his third Antarctic expedition at the age of forty-seven. The Professor, at sixty, is therefore, by the Shackleton metric, still in the early stages of his most ambitious phase. The ice, we are told, is waiting. It will not have to wait long.</p>
 
-        </div>
-
-        <!-- RIGHT COLUMN P3 -->
-        <div class="col-right">
-
-          <div class="image-box">
-            <img src="images/hurley_relief_boat.jpg" alt="The relief boat arrives." class="img-bw" />
-            <p class="fig-caption">The relief boat arrives at Elephant Island: a moment of profound joy and relief, after months of waiting. The Professor has never required a relief boat.</p>
-          </div>
-
-          <div class="column-rule"></div>
-
-          <div class="image-box">
-            <img src="images/hurley_samson.jpg" alt="Samson, one of the expedition dogs." class="img-bw" />
-            <p class="fig-caption">Samson, one of the expedition's most distinguished canine members. Noted for his determination and his refusal to acknowledge adverse conditions.</p>
-          </div>
-
-          <div class="column-rule"></div>
-
-          <section class="article-section">
-            <h3 class="section-head">A Brief History of Dulwich College</h3>
-            <p>Founded in 1619 by the actor Edward Alleyn — a man who understood, better than most, the importance of a commanding performance — Dulwich College has, over four centuries, produced an improbable number of individuals possessed of singular determination and a marked reluctance to accept the conventional limits of human endeavour.</p>
-            <p>Among its most distinguished alumni: Sir Ernest Shackleton, whose Imperial Trans-Antarctic Expedition of 1914–17 remains the defining study in leadership under conditions of absolute extremity. And, four decades later, the Long twins — one of whom has continued the polar tradition with a rigour that would have earned Shackleton's unqualified respect.</p>
-            <p>The College motto — <em>Detur Gloria Soli Deo</em>, "Let glory be given to God alone" — is, in the case of its more distinguished alumni, observed in the breach. Glory, in such cases, tends to accumulate regardless.</p>
-          </section>
-
-          <div class="column-rule"></div>
-
-          <div class="advert-block">
-            <p class="advert-head">Notice of Celebration</p>
-            <p class="advert-body">The Imperial Society for Northern Resolve (Dulwich Division) hereby gives notice that its most distinguished active member, Professor Antony Long, has this day attained his sixtieth year. The Society records its admiration, its gratitude, and its firm expectation that the next sixty years will prove equally eventful. Applications for membership remain closed. Standards remain high.</p>
-          </div>
-
-          <div class="classified-divider">— ✦ —</div>
-
-          <div class="advert-block">
-            <p class="advert-head">Durham University</p>
-            <p class="advert-head" style="font-size:0.72rem; margin-top:4px;">Department of Geography</p>
-            <p class="advert-body">Seeks, as ever, individuals of exceptional calibre willing to advance the frontiers of glaciological knowledge under conditions of considerable physical and intellectual demand. Previous experience of the Arctic preferred. Ability to carry colleagues across ice-fields considered an advantage. Enquiries to the Vice Chancellor's office.</p>
-          </div>
-
-          <div class="classified-divider">— ✦ —</div>
-
-          <div class="advert-block">
-            <p class="advert-head">Long &amp; Long, Consulting</p>
-            <p class="advert-body">Specialists in the identification of overlooked assets, the navigation of hostile terrain, and the delivery of ambitious projects against considerable odds. One partner provides the direction. The other provides the narrative. Together: unstoppable. Established 1966. References available from the Arctic Circle.</p>
-          </div>
-
-          <div class="column-rule"></div>
-
-          <div class="sig-seal-row">
-            <div class="signature-block">
-              <img src="images/simon_signature.png" alt="Simon Long Signature" class="signature-img" />
-              <p class="sig-note">(Elder. By Twenty Minutes.)</p>
+                <div class="poem">
+                    <p>He went north when others went south,</p>
+                    <p>He chose the ice when others chose the sun.</p>
+                    <p>He carried the fallen when others stood still,</p>
+                    <p>And arrived at sixty having barely begun.</p>
+                    <br>
+                    <p>The bear on the ridge did not slow his step.</p>
+                    <p>The dark did not dim his resolve.</p>
+                    <p>He is the fixed point. The rest of us turn.</p>
+                    <p>The questions he asks, he will solve.</p>
+                </div>
+                <p class="poem-attribution">— Ode to the Expedition Leader, composed by the Gazette's verse correspondent on the occasion of the Professor's sixtieth birthday.</p>
             </div>
-            <div class="motto-block">
-              <p class="motto-latin">FORTITUDINE ET PROPOSITO</p>
-              <p class="motto-translation"><em>By Fortitude and Purpose</em></p>
-              <p class="motto-footer-line">Old Alleyn's · Dulwich College · Est. 1619</p>
+
+            <!-- CENTRE COLUMN -->
+            <div class="col">
+                <p class="section-rule">History &amp; Scholarship</p>
+
+                <figure>
+                    <img src="images/hurley_elephant_island.jpg" alt="Elephant Island camp">
+                    <figcaption>The camp at Elephant Island, 1916. Endurance, in every sense of the word.</figcaption>
+                </figure>
+
+                <h3 class="article-title">A Brief History of the Dulwich College Polar Society</h3>
+                <p class="byline">Compiled from the College archives by our historical correspondent.</p>
+
+                <p class="drop-cap">The Dulwich College Polar Society was founded, according to the available records, in the winter of 1902, following a lecture by Captain Robert Falcon Scott to the College's Geographical Society. The founding members — seven in number, all of whom had read too much Nansen and not enough about frostbite — resolved to dedicate themselves to the study and, where possible, the direct experience of the polar regions.</p>
+
+                <p>The Society's most distinguished alumnus remains, of course, Ernest Shackleton (Dulwich, 1887–1890), whose expeditions to Antarctica established a standard of determined endurance that the Society has been attempting to meet ever since. Professor Long, who joined the Society in 1979 and served as its president from 1982 to 1984, is considered by many to be its most accomplished modern practitioner.</p>
+
+                <p>The Society meets annually, in January, when the weather in Dulwich most closely approximates the conditions its members aspire to study. Membership is open to all Old Alleynians with a demonstrated interest in cold places and an above-average tolerance for discomfort.</p>
+
+                <figure>
+                    <img src="images/shackleton_letter.jpg" alt="Shackleton's handwritten letter">
+                    <figcaption>A letter in Shackleton's hand, c.1914. The Professor's handwriting is, by all accounts, similarly decisive.</figcaption>
+                </figure>
+
+                <hr class="col-divider">
+
+                <p class="section-rule">A Note on Grand Design</p>
+
+                <p>It has come to the attention of this publication that Professor Long is engaged, in parallel with his academic and expeditionary commitments, in the renovation of a substantial property near Thirsk, North Yorkshire. The project, which has been described by local tradespeople as "ambitious" and by the Professor himself as "straightforward," involves the restoration of original stonework, the replacement of several centuries of drainage infrastructure, and the installation of a study of sufficient size to accommodate the Professor's considerable library and his even more considerable certainty.</p>
+
+                <p>The Gazette understands that the project is proceeding on schedule, which is to say that it is proceeding on the Professor's schedule, which is the only schedule that matters. Completion is anticipated for a date that the Professor has described as "soon," which, in his lexicon, means "when it is correct, not merely when it is convenient."</p>
+
+                <hr class="col-divider">
+
+                <div class="compare-box">
+                    <h4>Shackleton &amp; Long: A Comparative Study</h4>
+                    <table class="gazette-table">
+                        <thead>
+                            <tr><th>Quality</th><th>Shackleton</th><th>Long</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>School</td><td>Dulwich College</td><td>Dulwich College</td></tr>
+                            <tr><td>Primary field</td><td>Antarctica</td><td>Arctic &amp; Greenland</td></tr>
+                            <tr><td>Leadership style</td><td>Inspirational</td><td>Certain</td></tr>
+                            <tr><td>Response to crisis</td><td>Immediate action</td><td>Immediate action</td></tr>
+                            <tr><td>Attitude to doubt</td><td>None recorded</td><td>None recorded</td></tr>
+                            <tr><td>Rescue record</td><td>All 27 men saved</td><td>One geologist, 8 miles</td></tr>
+                            <tr><td>Retirement plans</td><td>None (died in harness)</td><td>None (see p.2)</td></tr>
+                            <tr><td>Verdict</td><td>Legendary</td><td>In progress</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="seal-block">
-              <div class="wax-seal">
-                <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" class="seal-svg">
-                  <defs>
-                    <path id="outerArc" d="M 18,110 A 92,92 0 0,1 202,110" />
-                    <path id="outerArcBottom" d="M 202,110 A 92,92 0 0,1 18,110" />
-                    <path id="innerArc" d="M 32,110 A 78,78 0 0,1 188,110" />
-                    <path id="innerArcBottom" d="M 188,110 A 78,78 0 0,1 32,110" />
-                  </defs>
-                  <circle cx="110" cy="110" r="100" fill="none" stroke="#7A1E1E" stroke-width="1.5"/>
-                  <circle cx="110" cy="110" r="86" fill="none" stroke="#7A1E1E" stroke-width="0.8"/>
-                  <circle cx="110" cy="12" r="2" fill="#7A1E1E" opacity="0.6"/>
-                  <circle cx="110" cy="208" r="2" fill="#7A1E1E" opacity="0.6"/>
-                  <circle cx="12" cy="110" r="2" fill="#7A1E1E" opacity="0.6"/>
-                  <circle cx="208" cy="110" r="2" fill="#7A1E1E" opacity="0.6"/>
-                  <text font-family="Playfair Display SC, serif" font-size="9" fill="#7A1E1E" letter-spacing="2">
-                    <textPath href="#outerArc" startOffset="5%">IMPERIAL SOCIETY FOR NORTHERN RESOLVE · DULWICH DIVISION</textPath>
-                  </text>
-                  <text font-family="Playfair Display SC, serif" font-size="8" fill="#7A1E1E" letter-spacing="1.5">
-                    <textPath href="#outerArcBottom" startOffset="8%">EST. 1966 · OFFICIAL EXPEDITIONARY SANCTION · Fortitudine et Proposito</textPath>
-                  </text>
-                  <text x="110" y="92" text-anchor="middle" font-family="Playfair Display SC, serif" font-size="13" fill="#7A1E1E" font-weight="bold">A. LONG</text>
-                  <text x="110" y="110" text-anchor="middle" font-family="EB Garamond, serif" font-size="10" fill="#7A1E1E" font-style="italic">Expeditioner</text>
-                  <text x="110" y="126" text-anchor="middle" font-family="Playfair Display SC, serif" font-size="9" fill="#7A1E1E">DULWICH · 1966</text>
-                  <line x1="68" y1="135" x2="152" y2="135" stroke="#7A1E1E" stroke-width="0.6" opacity="0.5"/>
-                  <text x="110" y="148" text-anchor="middle" font-family="EB Garamond, serif" font-size="8.5" fill="#7A1E1E" font-style="italic">Sixtieth Year</text>
-                  <line x1="55" y1="68" x2="165" y2="68" stroke="#7A1E1E" stroke-width="0.5" opacity="0.4"/>
-                </svg>
-              </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="col">
+                <p class="section-rule">Final Despatches</p>
+
+                <figure>
+                    <img src="images/hurley_relief_boat.jpg" alt="The relief boat arrives">
+                    <figcaption>The relief boat arrives at Elephant Island, 1916. Persistence, as ever, was rewarded.</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="images/hurley_samson.jpg" alt="Samson">
+                    <figcaption>Samson, the Endurance's most celebrated dog. Loyalty, in all conditions.</figcaption>
+                </figure>
+
+                <hr class="col-divider">
+
+                <p class="section-rule">A Brief History of Dulwich College</p>
+
+                <p>Dulwich College was founded in 1619 by the actor Edward Alleyn, who endowed it with the proceeds of a successful theatrical career and a conviction that education was the most important investment a man could make. It has, in the four centuries since, produced prime ministers, Nobel laureates, polar explorers, and, on one notable occasion, a pair of twins of whom one has spent his career studying ice and the other has spent his studying the commercial potential of sporting events. The College considers both outcomes equally distinguished.</p>
+
+                <p>Ernest Shackleton attended from 1887 to 1890. He left, according to the records, "with a clear sense of purpose and an impatience with settled conditions." The same assessment has been applied, by various colleagues over the years, to Professor Antony Long. The College is not surprised.</p>
+
+                <hr class="col-divider">
+
+                <div class="classified-box">
+                    <h4>Final Notices</h4>
+                    <p><strong>The Imperial Society for Northern Resolve (Dulwich Division)</strong> wishes to record its congratulations to Professor A. Long upon the occasion of his sixtieth year, and to note that his membership subscription remains, as ever, current.</p>
+                    <p><strong>The North Yorkshire Structural Engineers' Guild</strong> notes with interest the ongoing renovation near Thirsk and stands ready to assist, should the Viking drainage channel prove more assertive than anticipated.</p>
+                    <p><strong>The Dulwich College Polar Society</strong> announces its annual dinner, to be held in January, in conditions approximating those of the high Arctic. Dress: expedition-appropriate. Certainty: mandatory.</p>
+                </div>
+
+                <div class="further-corr">
+                    <h4>Further Correspondence: Received as this paper went to press.</h4>
+                    <p><em>Sir — I note that your publication has, in the course of this edition, described me as "the elder twin" on no fewer than seven occasions. I wish to state, for the record, that I consider this characterisation to be accurate, appropriate, and long overdue. Yours, with fraternal warmth and twenty minutes of seniority,</em></p>
+                    <p class="letter-sig">— S. Long, Elder. By Twenty Minutes.</p>
+                    <p style="margin-top:8px;"><em>The Editor notes: The twenty minutes have been acknowledged. We move on.</em></p>
+                </div>
+
+                <div class="colophon">
+                    <div class="colophon-sig">
+                        <img src="images/simon_signature.png" alt="Simon Long's signature">
+                        <p>Simon Long &mdash; Elder. By Twenty Minutes.</p>
+                        <p>Editor &amp; Proprietor, The Dulwich Gazette</p>
+                    </div>
+                    <div class="colophon-motto">
+                        <em>Fortitudine et Proposito</em>
+                    </div>
+                    <div class="seal-svg">
+                        <svg width="90" height="90" viewBox="0 0 90 90">
+                            <circle cx="45" cy="45" r="42" fill="none" stroke="#3A2F27" stroke-width="1.5"/>
+                            <circle cx="45" cy="45" r="36" fill="none" stroke="#3A2F27" stroke-width="0.8"/>
+                            <text font-family="'Playfair Display SC', serif" font-size="5.5" fill="#3A2F27" text-anchor="middle">
+                                <textPath href="#circle-path" startOffset="0%">IMPERIAL SOCIETY FOR NORTHERN RESOLVE · DULWICH DIVISION · EST. 1966 ·</textPath>
+                            </text>
+                            <defs>
+                                <path id="circle-path" d="M 45,45 m -33,0 a 33,33 0 1,1 66,0 a 33,33 0 1,1 -66,0"/>
+                            </defs>
+                            <text x="45" y="41" font-family="'Playfair Display', serif" font-size="7" fill="#3A2F27" text-anchor="middle" font-weight="700">OFFICIAL</text>
+                            <text x="45" y="50" font-family="'Playfair Display', serif" font-size="7" fill="#3A2F27" text-anchor="middle" font-weight="700">SANCTION</text>
+                            <text x="45" y="59" font-family="'Playfair Display SC', serif" font-size="5" fill="#3A2F27" text-anchor="middle">Fortitudine</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="lexicon-box">
+                    <h4>A Glaciologist's Lexicon</h4>
+                    <div class="lexicon-entry"><strong>Ablation Zone.</strong> The lower portion of a glacier where ice is lost through melting. Not to be confused with the zone of professional attrition, which operates on similar principles.</div>
+                    <div class="lexicon-entry"><strong>Calving.</strong> The process by which a glacier sheds icebergs. Dramatic, irreversible, and frequently underestimated in scale.</div>
+                    <div class="lexicon-entry"><strong>Crevasse.</strong> A deep fissure in the ice, formed by stress. The Professor has personal experience of these. See p.1.</div>
+                    <div class="lexicon-entry"><strong>Firn.</strong> Compacted granular snow, intermediate between fresh snow and glacial ice. A transitional state. The Professor does not linger in transitional states.</div>
+                    <div class="lexicon-entry"><strong>Isostatic Rebound.</strong> The gradual rise of land following the removal of glacial weight. A useful metaphor for the period following a difficult committee meeting.</div>
+                    <div class="lexicon-entry"><strong>Nunatak.</strong> A peak of rock projecting above a glacier. Isolated, exposed, and entirely unmoved by its surroundings. The Professor considers this admirable.</div>
+                    <div class="lexicon-entry"><strong>Terminus.</strong> The lowest end of a glacier. The Professor, at sixty, notes that his terminus remains some considerable distance away, and that the gradient is, if anything, increasing.</div>
+                </div>
             </div>
-          </div>
 
-          <div class="column-rule" style="margin-top:14px;"></div>
+        </div><!-- end col-grid -->
 
-          <section class="article-section">
-            <h3 class="section-head">A Glaciologist's Lexicon</h3>
-            <p class="article-byline">Terms of the Trade, for the Uninitiated</p>
-            <p>For those who have not had the privilege of accompanying Professor Long into the field, the following brief glossary of glaciological terminology may prove instructive. It is offered in the spirit of public education and with the firm conviction that a man who can name a thing has already begun to master it.</p>
-            <p><strong>Ablation Zone.</strong> The lower portion of a glacier where melting exceeds accumulation. The glacier loses mass here. The Professor considers this a useful metaphor for institutional bureaucracy.</p>
-            <p><strong>Calving.</strong> The process by which chunks of ice break from a glacier's terminus into the sea, forming icebergs. Dramatic, irreversible, and — from a safe distance — magnificent. Not unlike certain academic committee decisions.</p>
-            <p><strong>Crevasse.</strong> A deep crack in a glacier formed by differential movement of ice. Invisible under snow. Extremely hazardous. The Professor has fallen into none. His colleagues have fared variably.</p>
-            <p><strong>Firn.</strong> Compacted granular snow that has survived at least one melt season but has not yet become glacial ice. It is, in essence, snow that has committed to the process but not yet completed it. The Gazette considers this a recognisable condition.</p>
-            <p><strong>Isostatic Rebound.</strong> The gradual rising of land masses following the retreat of glacial ice, as the earth's crust recovers from the weight it has borne. Scientists measure this in millimetres per year. It is, the Professor notes, a very long game. He approves of long games.</p>
-            <p><strong>Nunatak.</strong> A peak of rock projecting above a surrounding glacier or ice sheet. From the Greenlandic Inuit <em>nunataq</em>. Isolated, exposed, and entirely self-sufficient. The Professor has been described in similar terms, though not, to his knowledge, in the scientific literature.</p>
-            <p><strong>Terminus.</strong> The lower end of a glacier — where the ice meets the world beyond the ice. All journeys have one. The Professor, at sixty, notes that his terminus remains some considerable distance away, and that the gradient is, if anything, increasing.</p>
-          </section>
-
-          <div class="column-rule" style="margin-top:14px;"></div>
-          <div class="column-rule"></div>
-
-          <section class="article-section">
-            <h3 class="section-head">Further Correspondence</h3>
-            <p class="article-byline">Received as this paper went to press</p>
-            <p><strong>To the Editor,</strong></p>
-            <p>Sir — While I applaud your paper’s recognition of my brother’s sixtieth year, I must take issue with the implication that his achievements are in any way attributable to his position as the younger twin. The twenty-minute gap to which you so flippantly refer was, I assure you, a period of intense and productive activity on my part, during which I established a considerable lead in all matters of seniority, a lead I have maintained ever since. He has been playing catch-up from the start. I trust this clarifies the matter.</p>
-            <p>Yours, in chronological precedence,</p>
-            <p><strong>S. Long (Elder)</strong><br><em>South Cotswolds</em></p>
-          </section>
-
-          <div class="classified-divider">— ✦ —</div>
-
-          <div class="advert-block">
-            <p class="advert-head">A Final Word from the Editor</p>
-            <p class="advert-body">The Editor notes the preceding correspondence. The Editor stands by his original assessment. The Editor further notes that while the elder twin was busy establishing his chronological lead, the younger was clearly planning his first expedition. The results speak for themselves. This correspondence is now closed.</p>
-          </div>
-
-          <p class="footer-note" style="font-family:	'EB Garamond',serif; font-size:0.72rem; font-style:italic; text-align:center; color:#3A2F27; opacity:0.7; margin-top:8px;">
-            <em>The Dulwich Gazette is published on the occasion of Professor Antony Long's sixtieth birthday, March 3rd, 2026. All accounts herein are substantially true, with the exception of those which are entirely true. The Editor accepts no responsibility for any increase in the Professor's already considerable estimation of his own abilities. The ice, as ever, awaits.</em>
-          </p>
-
+        <div class="page-footer">
+            Page the Third &amp; Final &nbsp;⬥&nbsp; The Dulwich Gazette &nbsp;⬥&nbsp; March 3rd, 1914 (Also 2026) &nbsp;⬥&nbsp; Dulwich College, Founded 1619 &nbsp;⬥&nbsp; <em>Fortitudine et Proposito</em>
         </div>
-      </div><!-- /content-grid p3 -->
 
-      <footer class="gazette-footer">
-        <div class="footer-rule"></div>
-        <p class="footer-text">PAGE THE THIRD &amp; FINAL &nbsp;—&nbsp; ESTABLISHED 1966 &nbsp;—&nbsp; OLD ALLEYN'S · DULWICH COLLEGE · FOUNDED 1619 &nbsp;—&nbsp; <em>FORTITUDINE ET PROPOSITO</em></p>
-        <div class="footer-rule"></div>
-      </footer>
+    </div>
 
-    </div><!-- /page-3 -->
-
-  </main>
+</div><!-- end gazette-wrapper -->
 
 </body>
 </html>

@@ -1,0 +1,276 @@
+/* ═══════════════════════════════════════════════════════════
+   THE DULWICH GAZETTE — DEFINITIVE EDITION
+   Merges the Frenemy critique (typography, hierarchy) with the
+   original aged-paper aesthetic for an award-winning result.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── 1. FONT IMPORTS & CORE SETUP (from Frenemy) ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&family=Playfair+Display:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background-color: #1a1008; /* Dark background for contrast */
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'EB Garamond', serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  color: #28231E;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── 2. AGED PAPER & BACKGROUND EFFECTS (from Original) ── */
+.paper-texture, .vignette, .watermark-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.paper-texture {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.07'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.vignette {
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(15, 8, 3, 0.65) 100%);
+}
+
+.watermark-bg img {
+  width: 55%;
+  max-width: 650px;
+  opacity: 0.035;
+  filter: grayscale(100%) contrast(250%) blur(0.5px);
+  mix-blend-mode: multiply;
+}
+
+.gazette-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 24px 56px;
+  background-color: #F4EAD7;
+  background-image:
+    radial-gradient(ellipse 200px 300px at 0% 50%, rgba(139,100,55,0.09) 0%, transparent 100%),
+    radial-gradient(ellipse 200px 300px at 100% 50%, rgba(139,100,55,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 400px 100px at 50% 0%, rgba(139,100,55,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 400px 120px at 50% 100%, rgba(139,100,55,0.10) 0%, transparent 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.22 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23grain)'/%3E%3C/svg%3E");
+  box-shadow:
+    0 0 80px rgba(15,8,3,0.8),
+    inset 0 0 100px rgba(139,100,60,0.12);
+}
+
+/* ── 3. MASTHEAD & HIERARCHY (Frenemy System) ── */
+.masthead {
+  text-align: center;
+  padding: 16px 0 12px;
+  border-bottom: 3px double #3A2F27;
+  margin-bottom: 24px;
+}
+
+.masthead-crest {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.crest-img {
+    height: 60px;
+    filter: grayscale(1) contrast(1.1) brightness(0.9) sepia(0.1);
+    opacity: 0.85;
+}
+
+.masthead-center {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 24px;
+}
+
+.gazette-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 900;
+  color: #28231E;
+  line-height: 1;
+}
+
+.gazette-subtitle {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.masthead-meta {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-top: 1px solid #3A2F27;
+  padding: 8px 0;
+  margin-top: 16px;
+}
+
+/* ── 4. HEADLINE & ARTICLE STYLING (Frenemy System) ── */
+.headline-band {
+  text-align: center;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #3A2F27;
+}
+
+.headline-kicker {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: #7A1E1E; /* A deep, archival red */
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.headline-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.headline-deck {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #555;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  border-bottom: 1px solid #3A2F27;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+
+.col-left, .col-centre, .col-right {
+  padding-top: 4px; /* Align tops of columns */
+}
+
+.col-left { border-right: 1px solid rgba(58, 47, 39, 0.25); padding-right: 20px; }
+.col-centre { border-right: 1px solid rgba(58, 47, 39, 0.25); padding-right: 20px; }
+
+.section-head {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #3A2F27;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.article-byline {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.body-text-block p {
+  text-align: justify;
+  hyphens: auto;
+  margin-bottom: 10px;
+}
+
+.body-text-block p:first-of-type::first-letter {
+    font-family: 'Playfair Display', serif;
+    float: left;
+    font-size: 4em;
+    line-height: 0.8;
+    padding-right: 6px;
+    margin-top: 4px;
+    font-weight: 700;
+}
+
+.pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    margin: 16px 10px;
+    padding: 10px 0;
+    border-top: 1px solid #3A2F27;
+    border-bottom: 1px solid #3A2F27;
+    break-inside: avoid;
+    color: #7A1E1E;
+}
+
+/* ── 5. IMAGE & FIGURE TREATMENT (Original, refined by Frenemy) ── */
+figure {
+    margin: 0 0 12px 0;
+    break-inside: avoid;
+}
+
+figure img {
+    width: 100%;
+    display: block;
+    border: 1px solid #3A2F27;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 3px 3px 12px rgba(20,10,5,0.35);
+    filter: grayscale(1) contrast(1.2) sepia(0.15) brightness(0.95);
+}
+
+figcaption {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #555;
+    margin-top: 6px;
+    text-align: right;
+}
+
+/* ── 6. SIGNATURE & FOOTER (Original, refined) ── */
+.signature-block {
+    text-align: center;
+    margin-top: 24px;
+}
+
+.signature-block img {
+    height: 50px;
+    filter: brightness(0.4) contrast(1.5) sepia(0.1);
+}
+
+.colophon-text {
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 8px;
+}
+
+.page-footer {
+    text-align: center;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    border-top: 1px solid #3A2F27;
+    padding-top: 8px;
+    margin-top: 24px;
+}
