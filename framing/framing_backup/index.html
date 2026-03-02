@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dulwich Gazette — Framing Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F3E8D0;
+      --dark: #1C1610;
+      --ink: #28231E;
+      --sepia: #3A2F27;
+      --red: #7A1E1E;
+      --gold: #B8924A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #0e0b08;
+      font-family: 'EB Garamond', serif;
+      color: var(--cream);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      border-bottom: 1px solid rgba(184,146,74,0.3);
+      background: radial-gradient(ellipse at center top, rgba(184,146,74,0.08) 0%, transparent 70%);
+    }
+
+    .hero-kicker {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(243,232,208,0.7);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-rule {
+      width: 120px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto;
+      opacity: 0.5;
+    }
+
+    /* ── NAV PILLS ── */
+    .nav-pills {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 28px 24px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      border: 1px solid rgba(184,146,74,0.4);
+      padding: 8px 20px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-pill:hover, .nav-pill.active {
+      background: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
+    }
+
+    /* ── OPTION SECTION ── */
+    .option-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      border-bottom: 1px solid rgba(184,146,74,0.15);
+    }
+
+    .option-section:last-of-type { border-bottom: none; }
+
+    .option-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0 28px;
+      align-items: start;
+      margin-bottom: 40px;
+    }
+
+    .option-badge {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      opacity: 0.6;
+      padding-top: 4px;
+    }
+
+    .option-meta {}
+
+    .option-tag {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .option-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .option-subtitle {
+      font-size: 1rem;
+      font-style: italic;
+      color: rgba(243,232,208,0.6);
+    }
+
+    /* ── MOCKUP IMAGE ── */
+    .mockup-wrap {
+      position: relative;
+      margin-bottom: 40px;
+      border: 1px solid rgba(184,146,74,0.2);
+      overflow: hidden;
+    }
+
+    .mockup-wrap img {
+      width: 100%;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .mockup-wrap:hover img {
+      transform: scale(1.015);
+    }
+
+    .mockup-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(14,11,8,0.85);
+      border: 1px solid rgba(184,146,74,0.5);
+      padding: 6px 14px;
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .recommended-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--gold);
+      padding: 6px 14px;
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--dark);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* ── DETAIL GRID ── */
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 700px) {
+      .detail-grid { grid-template-columns: 1fr; }
+      .option-header { grid-template-columns: 1fr; }
+      .option-badge { font-size: 2rem; }
+    }
+
+    .detail-block {}
+
+    .detail-block h3 {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(184,146,74,0.3);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+
+    .detail-block p {
+      font-size: 0.97rem;
+      color: rgba(243,232,208,0.8);
+      margin-bottom: 10px;
+      line-height: 1.65;
+    }
+
+    .spec-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .spec-list li {
+      font-size: 0.9rem;
+      color: rgba(243,232,208,0.75);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(184,146,74,0.1);
+      display: flex;
+      gap: 10px;
+    }
+
+    .spec-list li::before {
+      content: '→';
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── VERDICT TAG ── */
+    .verdict {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 8px 18px;
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .verdict-recommended {
+      background: rgba(184,146,74,0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+    }
+
+    .verdict-great {
+      background: rgba(243,232,208,0.05);
+      border: 1px solid rgba(243,232,208,0.3);
+      color: rgba(243,232,208,0.7);
+    }
+
+    /* ── PRINT SPECS SECTION ── */
+    .specs-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      border-top: 1px solid rgba(184,146,74,0.2);
+    }
+
+    .specs-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .specs-section .section-sub {
+      font-style: italic;
+      color: rgba(243,232,208,0.6);
+      margin-bottom: 36px;
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+    }
+
+    .specs-table th {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: left;
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(184,146,74,0.4);
+    }
+
+    .specs-table td {
+      padding: 12px 16px;
+      color: rgba(243,232,208,0.8);
+      border-bottom: 1px solid rgba(184,146,74,0.1);
+      vertical-align: top;
+    }
+
+    .specs-table tr:hover td {
+      background: rgba(184,146,74,0.05);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 60px 24px 80px;
+      border-top: 1px solid rgba(184,146,74,0.2);
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+
+    .cta-section p {
+      font-style: italic;
+      color: rgba(243,232,208,0.6);
+      margin-bottom: 28px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--gold);
+      padding: 14px 32px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .cta-btn:hover { opacity: 0.85; }
+
+    .cta-btn-ghost {
+      display: inline-block;
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--cream);
+      border: 1px solid rgba(243,232,208,0.4);
+      padding: 14px 32px;
+      text-decoration: none;
+      margin-left: 16px;
+      transition: all 0.2s;
+    }
+
+    .cta-btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: rgba(243,232,208,0.3);
+      border-top: 1px solid rgba(184,146,74,0.1);
+    }
+
+    /* ── DIVIDER ── */
+    .ornament {
+      text-align: center;
+      color: var(--gold);
+      opacity: 0.4;
+      font-size: 1.2rem;
+      margin: 0 auto 40px;
+      letter-spacing: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-kicker">The Dulwich Gazette · Birthday Edition</p>
+    <h1>How to Frame<br><em>a Life Well Lived</em></h1>
+    <p class="hero-sub">Three approaches to displaying The Dulwich Gazette as a framed birthday tribute for Professor Antony Long.</p>
+    <div class="hero-rule"></div>
+  </section>
+
+  <!-- NAV -->
+  <nav class="nav-pills">
+    <a href="#option-a" class="nav-pill active">Option A — Triptych</a>
+    <a href="#option-b" class="nav-pill">Option B — Vertical Column</a>
+    <a href="#option-c" class="nav-pill">Option C — Single Hero</a>
+    <a href="#specs" class="nav-pill">Print Specifications</a>
+  </nav>
+
+  <!-- ═══ OPTION A ═══ -->
+  <section class="option-section" id="option-a">
+    <div class="option-header">
+      <div class="option-badge">A</div>
+      <div class="option-meta">
+        <p class="option-tag">Recommended · The Full Edition</p>
+        <h2 class="option-title">The Horizontal Triptych</h2>
+        <p class="option-subtitle">Three frames, side by side — the complete broadsheet experience.</p>
+      </div>
+    </div>
+
+    <div class="mockup-wrap">
+      <img src="mockups/option_a_triptych.jpg" alt="Three framed gazette sheets hung side by side on a charcoal wall above a console table">
+      <span class="mockup-badge">Charcoal Wall · Dark Oak Frames · Ivory Mount</span>
+      <span class="recommended-badge">★ Recommended</span>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h3>Why This Works</h3>
+        <p>This is the classic broadsheet display. Three frames of equal size, hung in a horizontal row with the masthead page at centre, create a wall installation that reads like a genuine Edwardian newspaper spread out on a reading table — except it never yellows, never tears, and never gets used to line a birdcage.</p>
+        <p>The dark charcoal or forest green wall throws the aged cream paper into sharp relief. The eye travels naturally left to right, reading the narrative across all three sheets. Guests will stop. They will lean in. They will ask questions. That is the point.</p>
+        <span class="verdict verdict-recommended">The Gazette's Recommendation</span>
+      </div>
+      <div class="detail-block">
+        <h3>Specifications</h3>
+        <ul class="spec-list">
+          <li>Three frames, each 297 × 750mm (A3 width, custom height)</li>
+          <li>Frame: dark antique oak or antique black, 20–25mm moulding</li>
+          <li>Mount: ivory or natural cream, 40–50mm border</li>
+          <li>Wall colour: charcoal, forest green, or deep navy</li>
+          <li>Spacing between frames: 30–50mm</li>
+          <li>Total wall width required: approx. 1.1–1.2m</li>
+          <li>Hang height: centre of frames at eye level (approx. 145–155cm)</li>
+          <li>Print finish: matte or satin on 170gsm uncoated stock</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ OPTION B ═══ -->
+  <section class="option-section" id="option-b">
+    <div class="option-header">
+      <div class="option-badge">B</div>
+      <div class="option-meta">
+        <p class="option-tag">Dramatic · The Staircase Edition</p>
+        <h2 class="option-title">The Vertical Column</h2>
+        <p class="option-subtitle">Three frames stacked in a single column — built for tall walls and staircases.</p>
+      </div>
+    </div>
+
+    <div class="mockup-wrap">
+      <img src="mockups/option_b_vertical.jpg" alt="Three framed gazette sheets hung vertically on a forest green staircase wall">
+      <span class="mockup-badge">Forest Green Wall · Antique Black Frames · Staircase Setting</span>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h3>Why This Works</h3>
+        <p>The staircase is one of the most underused display spaces in a house — and one of the most dramatic. Three frames hung vertically, with the masthead at the top, create a column of narrative that unfolds as you ascend. By the time you reach the top, you have read the whole story.</p>
+        <p>This option works particularly well in a Victorian or Edwardian property — which, given the renovation underway near Thirsk, may be rather apt. The forest green wall is period-perfect. The antique black frames are crisp against it. The wall sconce provides exactly the right quality of warm, directional light.</p>
+        <span class="verdict verdict-great">Excellent for Tall Walls & Staircases</span>
+      </div>
+      <div class="detail-block">
+        <h3>Specifications</h3>
+        <ul class="spec-list">
+          <li>Three frames, each 297 × 750mm (A3 width, custom height)</li>
+          <li>Frame: antique black or dark walnut, 20mm moulding</li>
+          <li>Mount: ivory or natural cream, 40mm border</li>
+          <li>Wall colour: forest green, deep burgundy, or charcoal</li>
+          <li>Spacing between frames: 30–40mm</li>
+          <li>Total wall height required: approx. 2.6–2.8m</li>
+          <li>Top frame: hang so its centre is at approx. 200cm</li>
+          <li>Print finish: matte on 170gsm uncoated stock</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ OPTION C ═══ -->
+  <section class="option-section" id="option-c">
+    <div class="option-header">
+      <div class="option-badge">C</div>
+      <div class="option-meta">
+        <p class="option-tag">Bold · The Statement Piece</p>
+        <h2 class="option-title">The Single Hero</h2>
+        <p class="option-subtitle">One large frame, one wall, one statement. The masthead page as a centrepiece.</p>
+      </div>
+    </div>
+
+    <div class="mockup-wrap">
+      <img src="mockups/option_c_hero.jpg" alt="A single large framed gazette sheet above a Chesterfield sofa in a navy library">
+      <span class="mockup-badge">Navy Wall · Dark Oak Frame · Wide Ivory Mount · Library Setting</span>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h3>Why This Works</h3>
+        <p>Sometimes one thing, done at scale, is more powerful than three things done at normal size. A single large frame — A2 or even A1 — of the masthead page above a sofa, fireplace, or desk makes an immediate and unambiguous statement. The Dulwich Gazette as a centrepiece, not a collection.</p>
+        <p>This is the right choice if wall space is limited, if budget is a consideration, or if Antony simply has one wall that deserves a single, commanding piece. The wide ivory mount gives the print room to breathe. The navy wall turns the whole thing into something that looks like it belongs in a Pall Mall club.</p>
+        <span class="verdict verdict-great">Best for a Single Statement Wall</span>
+      </div>
+      <div class="detail-block">
+        <h3>Specifications</h3>
+        <ul class="spec-list">
+          <li>Single frame, 420 × 900mm (A2 width) or 594 × 1200mm (A1)</li>
+          <li>Frame: dark antique oak, substantial 30–35mm moulding</li>
+          <li>Mount: wide ivory, 60–80mm border — give it space</li>
+          <li>Wall colour: deep navy, charcoal, or dark forest green</li>
+          <li>Hang height: centre of frame at eye level (approx. 145–155cm)</li>
+          <li>Print finish: matte or satin on 200gsm uncoated stock</li>
+          <li>Note: request print at 100% scale — do not auto-fit</li>
+          <li>PDF file: Poster 1 (the masthead page) is the one to use</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRINT SPECS ═══ -->
+  <section class="specs-section" id="specs">
+    <div class="ornament">· · ·</div>
+    <h2>Print Specifications for Your Designer</h2>
+    <p class="section-sub">Everything they need to know. Send them this page.</p>
+
+    <table class="specs-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Dimensions</th>
+          <th>Content</th>
+          <th>Recommended Print Size</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Poster 1</strong></td>
+          <td>297 × 745mm</td>
+          <td>Masthead, headline, all three columns — the principal account</td>
+          <td>A3 (297×420mm) or custom 297×745mm</td>
+          <td>The hero sheet. Use for Option C at A2/A1 scale.</td>
+        </tr>
+        <tr>
+          <td><strong>Poster 2</strong></td>
+          <td>297 × 536mm</td>
+          <td>Leadership doctrine, Spitsbergen rescue, expedition facts</td>
+          <td>Custom 297×536mm</td>
+          <td>Shortest of the three — works well as the centre frame in Option A.</td>
+        </tr>
+        <tr>
+          <td><strong>Poster 3</strong></td>
+          <td>297 × 672mm</td>
+          <td>Wardrobe, polar history, portrait, comparative table, colophon</td>
+          <td>Custom 297×672mm</td>
+          <td>Contains the signature and seal — the natural closing piece.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 32px;">
+      <div class="detail-block">
+        <h3>Designer Briefing Notes</h3>
+        <ul class="spec-list">
+          <li>Files are image-based PDFs (rasterised at 150dpi). Print at 100% — do not scale or auto-fit.</li>
+          <li>Request <strong>matte or satin finish</strong>. Glossy will destroy the aged paper aesthetic.</li>
+          <li>Preferred stock: <strong>170gsm uncoated</strong> for the newsprint feel; 200gsm for the single hero option.</li>
+          <li>The background colour is a warm cream (#F3E8D0) — ensure the printer's white point is calibrated accordingly.</li>
+          <li>For custom frame sizes, a framer can cut bespoke mounts to fit these non-standard dimensions.</li>
+          <li>Recommended framers for bespoke work: <strong>Snap Galleries</strong> (London), <strong>The Frame Workshop</strong> (York — close to Thirsk), or any FATG-accredited framer.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-section">
+    <h2>The Gazette Itself</h2>
+    <p>The full three-page edition, live and permanent.</p>
+    <a href="../index.html" class="cta-btn">Read The Dulwich Gazette</a>
+    <a href="https://slongy333.github.io/dulwich-gazette/" class="cta-btn-ghost" target="_blank">Open in New Tab</a>
+  </section>
+
+  <footer>
+    The Dulwich Gazette &nbsp;·&nbsp; March 3rd, 1914 (Also 2026) &nbsp;·&nbsp; Printed by the Dulwich Press &nbsp;·&nbsp; <em>Fortitudine et Proposito</em>
+  </footer>
+
+  <script>
+    // Highlight active nav pill on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const pills = document.querySelectorAll('.nav-pill');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          pills.forEach(p => p.classList.remove('active'));
+          const active = document.querySelector(`.nav-pill[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
